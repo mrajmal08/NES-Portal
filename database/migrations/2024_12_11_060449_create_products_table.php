@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('price')->nullable();
             $table->string('status')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

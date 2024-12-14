@@ -32,7 +32,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Add New Order</h3>
@@ -41,11 +40,7 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col mb-2">
-                                        <label for="name">Car Picture</label>
-                                        <input type="file" class="form-control" name="car_picture" placeholder="Car Picture" required>
-                                    </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="company_id">Company</label> <span style="color: red;">*</span>
                                         <select name="company_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -54,7 +49,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-lg col-md -col-sm mb-2">
                                         <label for="mechanic_id">Mechanic</label><span style="color: red;">*</span>
                                         <select name="mechanic_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -65,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
                                         <select name="product_id[]" id="choices-multiple-remove-button" class="form-control" multiple>
                                             <option disabled>--Select One--</option>
@@ -74,7 +69,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
                                         <select name="service_id[]" id="choices-multiple-remove-button" class="form-control" multiple>
                                             <option disabled>--Select One--</option>
@@ -83,44 +78,37 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
-                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <h2>Vehicle Details:</h2>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
-                                        <label for="date">Date Time</label>
-                                        <input type="datetime-local" class="form-control" name="date" placeholder="Date and Time">
+                                    <div class="col-md col-sm mb-2">
+                                        <label for="name">Car Picture</label>
+                                        <input type="file" class="form-control" name="car_picture" placeholder="Car Picture" required>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="vehicle_no">Vehicle Number</label>
                                         <input type="text" class="form-control" name="vehicle_no" placeholder="Vehicle Number">
                                     </div>
-                                    <div class="col mb-2">
-                                        <label for="client_name">Client Name</label> <span style="color: gray;"> (optional)</span>
-                                        <input type="text" class="form-control" name="client_name" placeholder="Client Name">
-                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <h2>Client Details:</h2>
+
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="client_phone">Client Phone</label><span style="color: gray;"> (optional)</span>
                                         <input type="number" class="form-control" name="client_phone" placeholder="Client Phone">
                                     </div>
-                                    <div class="col mb-2">
-                                        <label for="status">Status</label><span style="color: red;">*</span>
-                                        <select name="status" class="form-control">
-                                            <option disabled selected>--Select One--</option>
-                                            <option value="process">Process</option>
-                                            <option value="completed">Completed</option>
-                                            <option value="delivered">Delivered</option>
-                                        </select>
+                                    <div class="col-md col-sm mb-2">
+                                        <label for="client_name">Client Name</label> <span style="color: gray;"> (optional)</span>
+                                        <input type="text" class="form-control" name="client_name" placeholder="Client Name">
                                     </div>
-                                    <div class="col mb-2">
-                                        <label for="total_price">Total Price</label>
-                                        <input type="number" class="form-control" name="total_price" step="0.01" min="0 placeholder=" Total Price">
-                                    </div>
+
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="notes">Notes</label>
                                         <textarea type="text" class="form-control" name="notes" rows="3" placeholder="Write Something..."></textarea>
                                     </div>

@@ -82,11 +82,11 @@ class OrderController extends Controller
 
             $data['company_id'] = $request->company_id;
             $data['mechanic_id'] = $request->mechanic_id;
-            $data['date'] = $request->date;
+            // $data['date'] = $request->date;
             $data['vehicle_no'] = $request->vehicle_no;
             $data['client_name'] = $request->client_name;
             $data['client_phone'] = $request->client_phone;
-            $data['status'] = $request->status;
+            $data['status'] = 'process';
             $data['total_price'] = $request->total_price;
             $data['notes'] = $request->notes;
 
