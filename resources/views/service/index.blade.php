@@ -48,6 +48,7 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
+                                        <th>Remarks</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -57,12 +58,12 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->status }}</td>
+                                        <td>{{ $item->remarks }}</td>
                                         <td>
                                             <a href="{{ route('service.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                                 Edit
-
                                                 <a href="javascript:void(0)"
                                                     class="btn btn-sm btn-danger my-2 delete-record"
                                                     data-id="{{ $item->id }}">
@@ -79,6 +80,7 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
+                                        <th>Remarks</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

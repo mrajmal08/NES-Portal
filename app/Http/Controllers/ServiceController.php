@@ -38,7 +38,6 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|unique:services',
             'price' => 'required',
-            'status' => 'required',
 
         ]);
 
@@ -55,7 +54,9 @@ class ServiceController extends Controller
         try {
             $data['name'] = $request->name;
             $data['price'] = $request->price;
-            $data['status'] = $request->status;
+            $data['status'] = 'active';
+            $data['remarks'] = $request->remarks;
+            $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 
             Service::create($data);
 
@@ -113,6 +114,10 @@ class ServiceController extends Controller
         if ($request->status) {
             $validatedData['status'] = $request->status;
         }
+        if ($request->remarks) {
+            $validatedData['remarks'] = $request->remarks;
+        }
+        $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 
         $service->update($validatedData);
         $flasher->option('position', 'top-center')->addSuccess('Service updated Successfully');

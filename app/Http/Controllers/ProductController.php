@@ -38,7 +38,6 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|unique:products',
             'price' => 'required',
-            'status' => 'required',
 
         ]);
 
@@ -53,9 +52,12 @@ class ProductController extends Controller
             }
         }
         try {
+
             $data['name'] = $request->name;
             $data['price'] = $request->price;
-            $data['status'] = $request->status;
+            $data['status'] = 'active';
+            $data['remarks'] = $request->remarks;
+            $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 
             Product::create($data);
 
@@ -113,6 +115,10 @@ class ProductController extends Controller
         if ($request->status) {
             $validatedData['status'] = $request->status;
         }
+        if ($request->remarks) {
+            $validatedData['remarks'] = $request->remarks;
+        }
+        $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 
         $product->update($validatedData);
         $flasher->option('position', 'top-center')->addSuccess('Product updated Successfully');

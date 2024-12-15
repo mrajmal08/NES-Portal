@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('price')->nullable();
             $table->string('status')->nullable();
             $table->text('remarks')->nullable();
+            $table->integer('checked')->nullable()->default('0');
             $table->timestamps();
             $table->softDeletes();
         });

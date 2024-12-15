@@ -48,6 +48,7 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
+                                        <th>Remarks</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -57,6 +58,7 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->status }}</td>
+                                        <td>{{ $item->remarks }}</td>
                                         <td>
                                             <a href="{{ route('product.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
                                                 <i class="fas fa-pencil-alt">
@@ -79,6 +81,7 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
+                                        <th>Remarks</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
