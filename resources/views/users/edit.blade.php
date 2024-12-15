@@ -22,7 +22,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md col-sm">
 
                     <div class="card card-success">
                         <div class="card-header">
@@ -33,29 +33,29 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" value="{{ $user->name }}" placeholder="Name" required>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control" name="email" value="{{ $user->email }}" placeholder="Email" required>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" name="password" placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="phone">Phone</label>
                                         <input type="number" class="form-control" name="phone" value="{{ $user->phone }}" placeholder="Phone Number">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" name="address" value="{{ $user->address }}" placeholder="Address">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="status">Status</label>
                                         <select name="status" class="form-control">
                                             <option disabled {{ empty($user->status) ? 'selected' : '' }}>--Select One--</option>
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="role_id">Role</label>
                                         <select name="role_id" id="role_id" class="form-control">
                                             <option disabled {{ empty($user->role_id) ? 'selected' : '' }}>--Select One--</option>
@@ -76,9 +76,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                     </div>
                                 </div>
                             </div>

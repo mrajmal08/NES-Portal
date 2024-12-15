@@ -41,7 +41,7 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="vendor_id">Vendor</label> <span style="color: red;">*</span>
                                         <select name="vendor_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -50,7 +50,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="product_id">Product</label><span style="color: red;">*</span>
                                         <select name="product_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -59,7 +59,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
                                         <select name="service_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -70,17 +70,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="date">Date Time</label> <span style="color: red;">*</span>
                                         <input type="datetime-local" class="form-control" name="date" placeholder="Date and Time">
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="invoice_photo">Invoice Photo</label>
                                         <input type="file" class="form-control" name="invoice_photo" placeholder="Invoice Photo">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="notes">Notes</label>
                                         <textarea type="text" class="form-control" name="notes" rows="3" placeholder="Write Something..."></textarea>
                                     </div>

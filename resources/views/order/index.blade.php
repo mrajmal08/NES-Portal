@@ -42,7 +42,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped table-responsive">
+                            <table id="example1" class="table table-bordered table-striped ">
                                 <thead>
                                     <tr>
                                         <th>Car Picture</th>
@@ -170,6 +170,7 @@
 <script>
     $(function() {
         $("#example1").DataTable({
+            "responsive": true,
             "lengthChange": false,
             "autoWidth": true,
             "ordering": false,

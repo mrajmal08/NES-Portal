@@ -22,7 +22,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md col-sm">
 
                     <div class="card card-success">
                         <div class="card-header">
@@ -33,29 +33,29 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" placeholder="Name" required>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control" name="email" placeholder="Email" required>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" name="password" placeholder="Password" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="phone">Phone</label>
                                         <input type="number" class="form-control" name="phone" placeholder="Phone Number">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" name="address" placeholder="Address">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                     <label for="status">Status</label>
                                         <select name="status" class="form-control">
                                             <option disabled selected>--Select One--</option>

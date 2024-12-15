@@ -41,11 +41,11 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="name">Car Picture</label>
                                         <input type="file" class="form-control" name="car_picture" placeholder="Car Picture">
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="company_id">Company</label> <span style="color: red;">*</span>
                                         <select name="company_id" class="form-control">
                                             <option disabled>--Select One--</option>
@@ -56,7 +56,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="mechanic_id">Mechanic</label><span style="color: red;">*</span>
                                         <select name="mechanic_id" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
                                         <select name="product_id[]" id="choices-multiple-remove-button" class="form-control" multiple>
                                             <option disabled>--Select One--</option>
@@ -81,7 +81,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
                                         <select name="service_id[]" id="choices-multiple-remove-button" class="form-control" multiple>
                                             <option disabled>--Select One--</option>
@@ -96,25 +96,25 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="date">Date Time</label>
                                         <input type="datetime-local" class="form-control" value="{{ $order->date }}" name="date" placeholder="Date and Time">
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="vehicle_no">Vehicle Number</label>
                                         <input type="text" class="form-control" name="vehicle_no" value="{{ $order->vehicle_no }}" placeholder="Vehicle Number">
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="client_name">Client Name</label> <span style="color: gray;"> (optional)</span>
                                         <input type="text" class="form-control" name="client_name" value="{{ $order->client_name }}" placeholder="Client Name">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="client_phone">Client Phone</label><span style="color: gray;"> (optional)</span>
                                         <input type="number" class="form-control" name="client_phone" value="{{ $order->client_phone }}" placeholder="Client Phone">
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="status">Status</label><span style="color: red;">*</span>
                                         <select name="status" class="form-control">
                                             <option disabled selected>--Select One--</option>
@@ -123,13 +123,13 @@
                                             <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
                                         </select>
                                     </div>
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="total_price">Total Price</label>
                                         <input type="number" class="form-control" name="total_price" value="{{ $order->total_price }}" step="0.01" min="0 placeholder=" Total Price">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mb-2">
+                                    <div class="col-md col-sm mb-2 mb-2">
                                         <label for="notes">Notes</label>
                                         <textarea type="text" class="form-control" name="notes" rows="3" placeholder="Write Something...">{{ $order->notes }}</textarea>
                                     </div>

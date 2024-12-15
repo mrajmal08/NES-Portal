@@ -32,15 +32,15 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" placeholder="Name" required>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="type">Type</label>
                                         <input type="text" class="form-control" name="type" placeholder="Type">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md col-sm mb-2">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" name="address" placeholder="address">
                                     </div>

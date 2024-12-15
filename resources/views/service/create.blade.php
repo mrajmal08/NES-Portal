@@ -22,7 +22,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md col-sm">
 
                     <div class="card card-success">
                         <div class="card-header">
