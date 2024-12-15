@@ -121,7 +121,7 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- <script src="{{ asset('dist/js/adminlte.min.js') }}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.0/dist/sweetalert2.min.js"></script>
 
 
