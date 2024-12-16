@@ -92,7 +92,7 @@
                                                 @endforeach
                                             </ul>
                                         </td>
-                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->vehicle_no }}</td>
                                         <td>{{ $item->client_name }}</td>
                                         <td>{{ $item->client_phone }}</td>

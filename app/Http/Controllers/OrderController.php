@@ -50,8 +50,6 @@ class OrderController extends Controller
             'mechanic_id' => 'required',
             'product_id' => 'required',
             'service_id' => 'required',
-            'date' => 'required',
-            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -149,8 +147,6 @@ class OrderController extends Controller
             'mechanic_id' => 'required',
             'product_id' => 'required',
             'service_id' => 'required',
-            'date' => 'required',
-            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -185,9 +181,9 @@ class OrderController extends Controller
         if ($request->mechanic_id) {
             $validatedData['mechanic_id'] = $request->mechanic_id;
         }
-        if ($request->date) {
-            $validatedData['date'] = $request->date;
-        }
+        // if ($request->date) {
+        //     $validatedData['date'] = $request->date;
+        // }
         if ($request->vehicle_no) {
             $validatedData['vehicle_no'] = $request->vehicle_no;
         }
@@ -259,5 +255,28 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], 500);
         }
+    }
+
+    public function getProductDetails(Request $request)
+    {
+
+        $products = Product::whereIn('id', $request->product_id)->get();
+
+        if ($products->isNotEmpty()) {
+            return response()->json($products);
+        }
+
+        return response()->json(['error' => 'Product not found'], 404);
+    }
+
+    public function  getServiceDetails(Request $request)
+    {
+        $services = Service::whereIn('id', $request->service_id)->get();
+
+        if ($services->isNotEmpty()) {
+            return response()->json($services);
+        }
+
+        return response()->json(['error' => 'Product not found'], 404);
     }
 }
