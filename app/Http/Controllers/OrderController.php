@@ -279,4 +279,15 @@ class OrderController extends Controller
 
         return response()->json(['error' => 'Product not found'], 404);
     }
+
+    public function getSelectedDetails(Request $request)
+    {
+        $products = Product::whereIn('id', $request->product_ids)->get(['name', 'price', 'remarks']);
+        $services = Service::whereIn('id', $request->service_ids)->get(['name', 'price', 'remarks']);
+
+        return response()->json([
+            'products' => $products,
+            'services' => $services
+        ]);
+    }
 }

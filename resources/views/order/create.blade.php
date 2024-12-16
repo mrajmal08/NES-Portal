@@ -4,8 +4,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" />
+
 @endpush
 
 @section('content')
@@ -104,7 +104,6 @@
                                 </div>
                                 <div class="mt-2">
                                     <h2>Client Details:</h2>
-
                                 </div>
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
