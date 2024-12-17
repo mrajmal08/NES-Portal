@@ -17,6 +17,8 @@ class CreateOrderProductsTable extends Migration
             $table->id();
             $table->string('order_id')->nullable();
             $table->string('product_id')->nullable();
+            $table->string('qty')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

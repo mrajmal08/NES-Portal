@@ -48,8 +48,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'company_id' => 'required',
             'mechanic_id' => 'required',
-            'product_id' => 'required',
-            'service_id' => 'required',
+            'product' => 'required',
+            'service' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -92,19 +92,32 @@ class OrderController extends Controller
 
             if ($order) {
                 $orderId = $order->id;
-                $productId = $request->product_id ?? [];
-                $serviceId = $request->service_id ?? [];
-                foreach ($productId as $product) {
+
+                $productId = $request->product ?? [];
+                $productQty = $request->product_qty ?? [];
+                $productRemarks = $request->product_remarks ?? [];
+
+                $serviceId = $request->service ?? [];
+                $serviceQty = $request->service_qty ?? [];
+                $serviceRemarks = $request->service_remarks ?? [];
+
+
+                foreach ($productId as $index => $product) {
                     OrderProduct::create([
                         'order_id' => $orderId,
-                        'product_id' => $product
+                        'product_id' => $product,
+                        'qty' => $productQty[$index] ?? 0,
+                        'remarks' => $productRemarks[$index] ?? '',
                     ]);
                 }
 
-                foreach ($serviceId as $service) {
+
+                foreach ($serviceId as $index => $service) {
                     OrderService::create([
                         'order_id' => $orderId,
-                        'service_id' => $service
+                        'service_id' => $service,
+                        'qty' => $serviceQty[$index] ?? 0,
+                        'remarks' => $serviceRemarks[$index] ?? '',
                     ]);
                 }
             }

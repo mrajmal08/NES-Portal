@@ -60,34 +60,80 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
-                                        <select id="product_id" name="product_id[]" class="selectpicker form-control" multiple aria-label="size 3 select example">
+                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple>
                                             <option disabled>--Select One--</option>
                                             @foreach ($product as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md col-sm mb-2">
-                                        <label for="service_id">Select Service</label><span style="color: red;">*</span>
-                                        <select id="service_id" name="service_id[]" class="selectpicker form-control" multiple aria-label="size 3 select example">
-                                            <option disabled>--Select One--</option>
-                                            @foreach ($service as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}">
+                                                {{ $item->name }}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="row" id="product-details">
-                                    <div class="col-md col-sm" id="product-details-container" class="mt-3"></div>
-                                    <div class="col-md col-sm" id="service-details-container" class="mt-3"></div>
+                                <div class="row mt-3">
+                                    <div class="col-md col-sm">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="details-product-table-body"></tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md col-sm" id="product-details-price" class="mt-3"></div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md col-sm mb-2">
+                                        <label for="service_id">Select Service</label><span style="color: red;">*</span>
+                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple>
+                                            <option disabled>--Select One--</option>
+                                            @foreach ($service as $item)
+                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}">
+                                                {{ $item->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md col-sm">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="details-service-table-body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label style="color:green">Combined Total Price</label>
+                                            <input type="text" class="form-control" id="combined-total-price" name="total_price" value="0.00" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="mt-2">
                                     <h2>Vehicle Details:</h2>
@@ -143,122 +189,116 @@
 
 <script>
     $(document).ready(function() {
-        let totalPrice = 0;
 
+        $('.selectpicker').selectpicker();
 
-        function updateTotalPrice() {
-            $('#combined-total-price').val(totalPrice.toFixed(2));
+        function handleSelectChange(selector) {
+            $(selector).on('changed.bs.select', function() {
+                const selectedValues = $(this).val();
+                const dropdown = $(this);
+
+                dropdown.find('option').each(function() {
+                    const optionValue = $(this).val();
+                    if (selectedValues && selectedValues.includes(optionValue)) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+
+                dropdown.selectpicker('refresh');
+            });
         }
 
-        // For products
-        $('#product_id').on('change', function() {
-            let productId = $(this).val();
-
-            if (productId.length > 0) {
-                $.ajax({
-                    url: '/get-product-details',
-                    method: 'POST',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        product_id: productId
-                    },
-                    success: function(response) {
-                        let productTotal = 0;
-                        $('#product-details-container').html('');
-                        response.forEach(function(product) {
-                            productTotal += parseFloat(product.price);
-                            let productDetail = `
-                            <div class="row product-details">
-                                <div class="form-group col-md col-sm">
-                                    <label>Product Name</label>
-                                    <input type="text" class="form-control" value="${product.name}" readonly>
-                                </div>
-                                <div class="form-group col-md col-sm">
-                                    <label>Product Price</label>
-                                    <input type="text" class="form-control" value="${product.price}" readonly>
-                                </div>
-                                <div class="form-group col-md col-sm">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" value="${product.remarks}" readonly>
-                                </div>
-                            </div>
-                        `;
-                            $('#product-details-container').append(productDetail);
-                        });
-
-                        totalPrice += productTotal;
-                        updateTotalPrice();
-                    },
-                    error: function(xhr) {
-                        console.error("Error fetching product details:", xhr.responseText);
-                    }
-                });
-            } else {
-
-                $('#product-details-container').html('');
-            }
-        });
-
-        // For services
-        $('#service_id').on('change', function() {
-            let serviceId = $(this).val();
-
-            if (serviceId.length > 0) {
-                $.ajax({
-                    url: '/get-service-details',
-                    method: 'POST',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        service_id: serviceId
-                    },
-                    success: function(response) {
-                        let serviceTotal = 0;
-                        $('#service-details-container').html('');
-                        response.forEach(function(service) {
-                            serviceTotal += parseFloat(service.price);
-                            let serviceDetail = `
-                            <div class="row service-details">
-                                <div class="form-group col-md col-sm">
-                                    <label>Service Name</label>
-                                    <input type="text" class="form-control" value="${service.name}" readonly>
-                                </div>
-                                <div class="form-group col-md col-sm">
-                                    <label>Service Price</label>
-                                    <input type="text" class="form-control" value="${service.price}" readonly>
-                                </div>
-                                <div class="form-group col-md col-sm">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" value="${service.remarks}" readonly>
-                                </div>
-                            </div>
-                        `;
-                            $('#service-details-container').append(serviceDetail);
-                        });
-
-                        totalPrice += serviceTotal;
-                        updateTotalPrice();
-                    },
-                    error: function(xhr) {
-                        console.error("Error fetching service details:", xhr.responseText);
-                    }
-                });
-            } else {
-                $('#service-details-container').html('');
-            }
-        });
-
-
-        let combinedTotalPriceField = `
-        <div class="row combined-total-price mt-3">
-            <div class="form-group col-md-12 col-sm">
-                <label style="color:green">Combined Total Price</label>
-                <input type="text" class="form-control" id="combined-total-price" name="total_price" value="0.00" readonly>
-            </div>
-        </div>
-    `;
-        $('#product-details-price').after(combinedTotalPriceField);
+        handleSelectChange('#product_id');
+        handleSelectChange('#service_id');
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+
+        function updateTable(tableBodySelector, selectedData, hiddenInputName) {
+            const tableBody = $(tableBodySelector);
+            tableBody.empty();
+
+            console.log(selectedData);
+
+            selectedData.forEach(item => {
+                if (tableBody.find(`tr[data-id="${item.id}"]`).length === 0) {
+                    tableBody.append(`
+                <tr data-id="${item.id}">
+                    <td><input type="hidden" name="${hiddenInputName}[]" value="${item.id}" />${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td><input type="number" name="${hiddenInputName}_qty[]" class="form-control" value="1" min="1" /></td>
+                    <td><input type="text" name="${hiddenInputName}_remarks[]" class="form-control" value="${item.remarks || ''}" /></td>
+                    <td><button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button></td>
+                </tr>
+            `);
+                }
+            });
+
+            updateTotalPrice();
+        }
+
+        function updateTotalPrice() {
+            let total = 0;
+
+            ['#details-product-table-body', '#details-service-table-body'].forEach(selector => {
+                $(selector).find('tr').each(function() {
+                    const price = parseFloat($(this).find('td:nth-child(3)').text());
+                    const quantity = parseFloat($(this).find('input[type="number"]').val());
+                    total += price * quantity;
+                });
+            });
+
+            $('#combined-total-price').val(total.toFixed(2));
+        }
+
+        $('#product_id').on('change', function() {
+            const selectedOptions = $(this).find('option:selected');
+            const selectedData = selectedOptions.map(function() {
+                return {
+                    id: $(this).val(),
+                    name: $(this).data('name'),
+                    price: $(this).data('price'),
+                    remarks: $(this).data('remarks'),
+                };
+            }).get();
+
+            updateTable('#details-product-table-body', selectedData, 'product');
+        });
+
+        $('#service_id').on('change', function() {
+            const selectedOptions = $(this).find('option:selected');
+            const selectedData = selectedOptions.map(function() {
+                return {
+                    id: $(this).val(),
+                    name: $(this).data('name'),
+                    price: $(this).data('price'),
+                    remarks: $(this).data('remarks'),
+                };
+            }).get();
+
+            updateTable('#details-service-table-body', selectedData, 'service');
+        });
+
+        $(document).on('click', '.remove-item', function() {
+            const row = $(this).closest('tr');
+            row.remove();
+            updateTotalPrice();
+        });
+
+        $(document).on('input', 'input[type="number"]', function() {
+            updateTotalPrice();
+        });
+    });
+</script>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 

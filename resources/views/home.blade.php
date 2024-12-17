@@ -45,7 +45,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>{{ $totalUsers }}<sup style="font-size: 20px">%</sup></h3>
+                                <h3>{{ $totalUsers }}<sup style="font-size: 20px"></sup></h3>
 
                                 <p>Total Users</p>
                             </div>
