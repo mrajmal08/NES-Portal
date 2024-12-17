@@ -286,11 +286,23 @@
             updateTable('#details-service-table-body', selectedData, 'service');
         });
 
-        $(document).on('click', '.remove-item', function() {
-            const row = $(this).closest('tr');
-            row.remove();
+
+        $(document).on('click', '.remove-item', function () {
+            const id = $(this).data('id');
+            const parentTable = $(this).closest('tbody');
+
+            $(this).closest('tr').remove(); // Remove row
+            if (parentTable.is('#details-product-table-body')) {
+                const selectedProducts = $('#product_id').val().filter(value => value != id);
+                $('#product_id').val(selectedProducts).trigger('change');
+            } else if (parentTable.is('#details-service-table-body')) {
+                const selectedServices = $('#service_id').val().filter(value => value != id);
+                $('#service_id').val(selectedServices).trigger('change');
+            }
+
             updateTotalPrice();
         });
+
 
         $(document).on('input', 'input[type="number"]', function() {
             updateTotalPrice();
