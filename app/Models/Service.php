@@ -14,7 +14,7 @@ class Service extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_services', 'service_id', 'order_id');
+        return $this->belongsToMany(Order::class, 'order_services', 'service_id', 'order_id')->withPivot('qty', 'remarks');
     }
 
     public function vendors()

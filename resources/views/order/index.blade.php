@@ -100,6 +100,10 @@
                                         <td>{{ $item->total_price }}</td>
                                         <td>{{ $item->notes }}</td>
                                         <td>
+                                        <a href="{{ route('order.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
+                                                <i class="fas fa-eye">
+                                                </i>
+                                                View
                                             <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>

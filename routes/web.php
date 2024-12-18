@@ -67,6 +67,8 @@ Route::post('/order/store', [App\Http\Controllers\OrderController::class, 'store
 Route::get('/order/edit/{id}', [App\Http\Controllers\OrderController::class, 'edit'])->name('order.edit');
 Route::post('/order/update/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('order.update');
 Route::get('/order/delete/{id}', [App\Http\Controllers\OrderController::class, 'delete'])->name('order.delete');
+Route::get('/order/view/{id}', [App\Http\Controllers\OrderController::class, 'view'])->name('order.view');
+
 Route::post('/get-product-details', [App\Http\Controllers\OrderController::class, 'getProductDetails'])->name('get.product.details');
 Route::post('/get-service-details', [App\Http\Controllers\OrderController::class, 'getServiceDetails'])->name('get.service.details');
 Route::post('/get-selected-details', [App\Http\Controllers\OrderController::class, 'getSelectedDetails'])->name('get.selected.details');

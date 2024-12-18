@@ -134,7 +134,7 @@ class OrderController extends Controller
 
     public function edit($id)
     {
-        $order = Order::with(['products', 'services'])->findOrFail($id);
+        $order = Order::with(['products', 'services', 'mechanic', 'company'])->findOrFail($id);
         $product = Product::orderBy('id', 'DESC')->get();
         $company = Company::orderBy('id', 'DESC')->get();
         $service = Service::orderBy('id', 'DESC')->get();
@@ -144,6 +144,12 @@ class OrderController extends Controller
         $selectedServices = $order->services->pluck('id')->toArray();
 
         return view('order.edit', compact('order', 'product', 'service', 'company', 'mechanic', 'selectedProducts', 'selectedServices'));
+    }
+
+    public function view($id)
+    {
+        $order = Order::with(['products', 'services', 'mechanic', 'company'])->findOrFail($id);
+        return view('order.view', compact('order'));
     }
 
     public function update(Request $request, $id, FlasherInterface $flasher)
