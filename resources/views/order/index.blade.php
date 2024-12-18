@@ -47,16 +47,10 @@
                                     <tr>
                                         <th>Car Picture</th>
                                         <th>Company</th>
-                                        <th>Mechanics</th>
-                                        <th>Products</th>
-                                        <th>Services</th>
-                                        <th>Date/Time</th>
                                         <th>Vehicle No</th>
-                                        <th>Client Name</th>
-                                        <th>Client Phone</th>
-                                        <th>Status</th>
+                                        <th>Date/Time</th>
                                         <th>Total Price</th>
-                                        <th>Notes</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -75,30 +69,18 @@
                                                 </a>
                                             </div>
                                         </td>
-
                                         <td>{{ $item->company->name ?? 'N/A' }}</td>
-                                        <td>{{ $item->mechanic->name ?? 'N/A' }}</td>
-                                        <td>
-                                            <ul>
-                                                @foreach ($item->products as $product)
-                                                <li>{{ $product->name }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <ul>
-                                                @foreach ($item->services as $service)
-                                                <li>{{ $service->name }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </td>
-                                        <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->vehicle_no }}</td>
-                                        <td>{{ $item->client_name }}</td>
-                                        <td>{{ $item->client_phone }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->total_price }}</td>
-                                        <td>{{ $item->notes }}</td>
+
+                                        <td>
+                                            <select class="status-dropdown form-control" data-id="{{ $item->id }}">
+                                                <option value="process" {{ $item->status == 'process' ? 'selected' : '' }}>Process</option>
+                                                <option value="delivered" {{ $item->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                                <option value="completed" {{ $item->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                            </select>
+                                        </td>
                                         <td>
                                         <a href="{{ route('order.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
                                                 <i class="fas fa-eye">
@@ -122,18 +104,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Car Picture</th>
+                                    <th>Car Picture</th>
                                         <th>Company</th>
-                                        <th>Mechanics</th>
-                                        <th>Products</th>
-                                        <th>Services</th>
-                                        <th>Date/Time</th>
                                         <th>Vehicle No</th>
-                                        <th>Client Name</th>
-                                        <th>Client Phone</th>
-                                        <th>Status</th>
+                                        <th>Date/Time</th>
                                         <th>Total Price</th>
-                                        <th>Notes</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -170,6 +146,31 @@
 <!-- <script src="{{ asset('dist/js/adminlte.min.js') }}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.0/dist/sweetalert2.min.js"></script>
 <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+
+<script>
+$(document).ready(function () {
+    $('.status-dropdown').on('change', function () {
+        let orderId = $(this).data('id');
+        let newStatus = $(this).val();
+
+        $.ajax({
+            url: "{{ route('orders.updateStatus') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: orderId,
+                status: newStatus
+            },
+            success: function (response) {
+                alert(response.message);
+            },
+            error: function () {
+                alert('Error updating status. Please try again.');
+            }
+        });
+    });
+});
+</script>
 
 <script>
     $(function() {

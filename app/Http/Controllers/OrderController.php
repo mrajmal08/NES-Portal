@@ -152,6 +152,24 @@ class OrderController extends Controller
         return view('order.view', compact('order'));
     }
 
+    public function updateStatus(Request $request, FlasherInterface $flasher)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'status' => 'required|string|in:process,delivered,completed',
+        ]);
+
+        try {
+            $order = Order::findOrFail($request->id);
+            $order->status = $request->status;
+            $order->save();
+
+            return response()->json(['message' => 'Order status updated successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to update status.'], 500);
+        }
+    }
+
     public function update(Request $request, $id, FlasherInterface $flasher)
     {
         $order = Order::find($id);
