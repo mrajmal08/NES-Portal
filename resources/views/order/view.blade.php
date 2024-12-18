@@ -90,7 +90,7 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->pivot->qty }}</td>
                                             <td>{{ $product->pivot->remarks }}</td>
-                                            <td>{{ $product->price }}</td>
+                                            <td>{{ $product->pivot->price }}</td>
                                         </tr>
                                         @endforeach
 
@@ -121,7 +121,7 @@
                                             <td>{{ $service->name }}</td>
                                             <td>{{ $service->pivot->qty }}</td>
                                             <td>{{ $service->pivot->remarks }}</td>
-                                            <td>{{ $service->price }}</td>
+                                            <td>{{ $service->pivot->price }}</td>
                                         </tr>
                                         @endforeach
 
@@ -140,7 +140,7 @@
                             <!-- /.col -->
                             <div class="col-md-3 col-sm-3 float-sm-right">
                                 <b>Total Price:</b>
-                                <p class="float-right">Rs: {{ $order->total_price }}</p>
+                                <p class="float-right">{{ $order->total_price }}</p>
                             </div>
                             <div class="col-md-1 col-sm-1">
                             </div>

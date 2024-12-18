@@ -69,6 +69,7 @@ Route::post('/order/update/{id}', [App\Http\Controllers\OrderController::class, 
 Route::get('/order/delete/{id}', [App\Http\Controllers\OrderController::class, 'delete'])->name('order.delete');
 Route::get('/order/view/{id}', [App\Http\Controllers\OrderController::class, 'view'])->name('order.view');
 Route::post('/orders/update-status', [App\Http\Controllers\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/get-edit-data', [App\Http\Controllers\OrderController::class, 'getEditData'])->name('get.edit.data');
 
 Route::post('/get-product-details', [App\Http\Controllers\OrderController::class, 'getProductDetails'])->name('get.product.details');
 Route::post('/get-service-details', [App\Http\Controllers\OrderController::class, 'getServiceDetails'])->name('get.service.details');

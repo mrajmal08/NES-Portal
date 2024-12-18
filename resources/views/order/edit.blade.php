@@ -40,6 +40,7 @@
                         <form method="POST" action="{{ route('order.update', [$order->id]) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
+                                <input type="hidden" id="order-id" value="{{ $order->id }}">
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="company_id">Company</label> <span style="color: red;">*</span>
@@ -76,6 +77,7 @@
                                                 data-name="{{ $item->name }}"
                                                 data-price="{{ $item->price }}"
                                                 data-remarks="{{ $item->remarks }}"
+                                                data-checked="{{ $item->checked }}"
                                                 {{ in_array($item->id, $selectedProducts) ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
@@ -114,6 +116,7 @@
                                                 data-name="{{ $item->name }}"
                                                 data-price="{{ $item->price }}"
                                                 data-remarks="{{ $item->remarks }}"
+                                                data-checked="{{ $item->checked }}"
                                                 {{ in_array($item->id, $selectedServices) ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
@@ -145,11 +148,9 @@
                                 <div class="row mt-3">
                                     <div class="col-md-12">
                                         <label style="color:green">Combined Total Price</label>
-                                        <input type="text" class="form-control" id="combined-total-price" value="{{ $order->total_price }}" readonly>
+                                        <input type="text" class="form-control" id="combined-total-price" name="total_price" value="{{ $order->total_price }}" readonly>
                                     </div>
                                 </div>
-
-
 
                                 <div class="mt-2">
                                     <h2>Vehicle Details:</h2>
@@ -232,7 +233,6 @@
 </script>
 
 
-
 <script>
     $(document).ready(function() {
         $('.selectpicker').selectpicker();
@@ -241,24 +241,58 @@
             const tableBody = $(tableBodySelector);
             tableBody.empty();
 
-            console.log(selectedData);
-
             selectedData.forEach(item => {
-                if (tableBody.find(`tr[data-id="${item.id}"]`).length === 0) {
-                    tableBody.append(`
-                <tr data-id="${item.id}">
-                    <td><input type="hidden" name="${hiddenInputName}[]" value="${item.id}" />${item.id}</td>
-                    <td>${item.name}</td>
-                    <td>${item.price}</td>
-                    <td><input type="number" name="${hiddenInputName}_qty[]" class="form-control" value="1" min="1" /></td>
-                    <td><input type="text" name="${hiddenInputName}_remarks[]" class="form-control" value="${item.remarks || ''}" /></td>
-                    <td><button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button></td>
-                </tr>
-            `);
+                const priceInput = item.checked == 1 ?
+                    `<input type="number" class="form-control" name="${hiddenInputName}_price[]" value="${item.price}" step="0.01" min="0">` :
+                    `<input type="number" class="form-control" name="${hiddenInputName}_price[]" value="${item.price}" step="0.01" min="0" readonly>`;
+
+                tableBody.append(`
+                    <tr data-id="${item.id}">
+                        <td><input type="hidden" name="${hiddenInputName}[]" value="${item.id}" />${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${priceInput}</td>
+                        <td><input type="number" name="${hiddenInputName}_qty[]" class="form-control" value="${item.qty || 1}" min="1" /></td>
+                        <td><input type="text" name="${hiddenInputName}_remarks[]" class="form-control" value="${item.remarks || ''}" /></td>
+                        <td><button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button></td>
+                    </tr>
+                `);
+            });
+            updateTotalPrice();
+
+        }
+
+
+        const orderId = $('#order-id').val();
+
+        function fetchAndPopulateData(orderId) {
+            $.ajax({
+                url: '/get-edit-data',
+                type: 'GET',
+                data: {
+                    order_id: orderId
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    if (response.products) {
+                        updateTable('#details-product-table-body', response.products, 'product');
+                    }
+
+
+                    if (response.services) {
+                        updateTable('#details-service-table-body', response.services, 'service');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
                 }
             });
+        }
 
-            updateTotalPrice();
+        if (orderId) {
+            fetchAndPopulateData(orderId);
+        } else {
+            console.error('Order ID is not available');
         }
 
         function updateTotalPrice() {
@@ -266,8 +300,8 @@
 
             ['#details-product-table-body', '#details-service-table-body'].forEach(selector => {
                 $(selector).find('tr').each(function() {
-                    const price = parseFloat($(this).find('td:nth-child(3)').text());
-                    const quantity = parseFloat($(this).find('input[type="number"]').val());
+                    const price = parseFloat($(this).find('input[name$="_price[]"]').val()) || 0;
+                    const quantity = parseFloat($(this).find('input[name$="_qty[]"]').val()) || 0;
                     total += price * quantity;
                 });
             });
@@ -283,6 +317,8 @@
                     name: $(this).data('name'),
                     price: $(this).data('price'),
                     remarks: $(this).data('remarks'),
+                    checked: $(this).data('checked'),
+
                 };
             }).get();
 
@@ -297,6 +333,8 @@
                     name: $(this).data('name'),
                     price: $(this).data('price'),
                     remarks: $(this).data('remarks'),
+                    checked: $(this).data('checked'),
+
                 };
             }).get();
 

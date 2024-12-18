@@ -17,6 +17,7 @@ class CreateOrderServicesTable extends Migration
             $table->id();
             $table->string('order_id')->nullable();
             $table->string('service_id')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
             $table->string('qty')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();

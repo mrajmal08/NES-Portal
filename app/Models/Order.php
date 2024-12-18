@@ -14,12 +14,12 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')->withPivot('qty', 'remarks');
+        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')->withPivot('qty', 'remarks', 'price');
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'order_services', 'order_id', 'service_id')->withPivot('qty', 'remarks');
+        return $this->belongsToMany(Service::class, 'order_services', 'order_id', 'service_id')->withPivot('qty', 'remarks', 'price');
     }
 
     public function mechanic()

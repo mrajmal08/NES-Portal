@@ -67,7 +67,7 @@
                                         <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple>
                                             <option disabled>--Select One--</option>
                                             @foreach ($product as $item)
-                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}">
+                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
                                                 {{ $item->name }}
                                             </option>
                                             @endforeach
@@ -99,7 +99,7 @@
                                         <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple>
                                             <option disabled>--Select One--</option>
                                             @foreach ($service as $item)
-                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}">
+                                            <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
                                                 {{ $item->name }}
                                             </option>
                                             @endforeach
@@ -227,12 +227,18 @@
             console.log(selectedData);
 
             selectedData.forEach(item => {
+                console.log(item);
+
                 if (tableBody.find(`tr[data-id="${item.id}"]`).length === 0) {
+                    const priceInput = item.checked == 1 ?
+                        `<input type="number" class="form-control" name="${hiddenInputName}_price[]" value="${item.price}" step="0.01" min="0">` :
+                        `<input type="number" class="form-control" name="${hiddenInputName}_price[]" value="${item.price}" step="0.01" min="0" readonly>`;
+
                     tableBody.append(`
                 <tr data-id="${item.id}">
                     <td><input type="hidden" name="${hiddenInputName}[]" value="${item.id}" />${item.id}</td>
                     <td>${item.name}</td>
-                    <td>${item.price}</td>
+                    <td>${priceInput}</td>
                     <td><input type="number" name="${hiddenInputName}_qty[]" class="form-control" value="1" min="1" /></td>
                     <td><input type="text" name="${hiddenInputName}_remarks[]" class="form-control" value="${item.remarks || ''}" /></td>
                     <td><button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button></td>
@@ -240,17 +246,18 @@
             `);
                 }
             });
-
             updateTotalPrice();
+
         }
+
 
         function updateTotalPrice() {
             let total = 0;
 
             ['#details-product-table-body', '#details-service-table-body'].forEach(selector => {
                 $(selector).find('tr').each(function() {
-                    const price = parseFloat($(this).find('td:nth-child(3)').text());
-                    const quantity = parseFloat($(this).find('input[type="number"]').val());
+                    const price = parseFloat($(this).find('input[name$="_price[]"]').val()) || 0;
+                    const quantity = parseFloat($(this).find('input[name$="_qty[]"]').val()) || 0;
                     total += price * quantity;
                 });
             });
@@ -266,6 +273,7 @@
                     name: $(this).data('name'),
                     price: $(this).data('price'),
                     remarks: $(this).data('remarks'),
+                    checked: $(this).data('checked'),
                 };
             }).get();
 
@@ -280,6 +288,7 @@
                     name: $(this).data('name'),
                     price: $(this).data('price'),
                     remarks: $(this).data('remarks'),
+                    checked: $(this).data('checked'),
                 };
             }).get();
 
@@ -287,7 +296,7 @@
         });
 
 
-        $(document).on('click', '.remove-item', function () {
+        $(document).on('click', '.remove-item', function() {
             const id = $(this).data('id');
             const parentTable = $(this).closest('tbody');
 

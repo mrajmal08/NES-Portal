@@ -14,6 +14,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Validator;
 use Redirect;
+use DB;
 
 class OrderController extends Controller
 {
@@ -96,10 +97,12 @@ class OrderController extends Controller
                 $productId = $request->product ?? [];
                 $productQty = $request->product_qty ?? [];
                 $productRemarks = $request->product_remarks ?? [];
+                $productPrice = $request->product_price ?? [];
 
                 $serviceId = $request->service ?? [];
                 $serviceQty = $request->service_qty ?? [];
                 $serviceRemarks = $request->service_remarks ?? [];
+                $servicePrice = $request->service_price ?? [];
 
 
                 foreach ($productId as $index => $product) {
@@ -108,6 +111,7 @@ class OrderController extends Controller
                         'product_id' => $product,
                         'qty' => $productQty[$index] ?? 0,
                         'remarks' => $productRemarks[$index] ?? '',
+                        'price' => $productPrice[$index] ?? '',
                     ]);
                 }
 
@@ -117,7 +121,9 @@ class OrderController extends Controller
                         'order_id' => $orderId,
                         'service_id' => $service,
                         'qty' => $serviceQty[$index] ?? 0,
-                        'remarks' => $serviceRemarks[$index] ?? '',
+                        'remarks' => $serviceRemarks[$index] ?? 0,
+                        'price' => $servicePrice[$index] ?? 0,
+
                     ]);
                 }
             }
@@ -146,6 +152,44 @@ class OrderController extends Controller
         return view('order.edit', compact('order', 'product', 'service', 'company', 'mechanic', 'selectedProducts', 'selectedServices'));
     }
 
+    public function getEditData(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+
+        $products = DB::table('order_products')
+            ->where('order_id', $order->id)
+            ->join('products', 'products.id', '=', 'order_products.product_id')
+            ->select(
+                'products.id as id',
+                'products.name as name',
+                'order_products.price as price',
+                'order_products.qty as qty',
+                'order_products.remarks as remarks'
+            )
+            ->get();
+
+
+        $services = DB::table('order_services')
+            ->where('order_id', $order->id)
+            ->join('services', 'services.id', '=', 'order_services.service_id')
+            ->select(
+                'services.id as id',
+                'services.name as name',
+                'order_services.price as price',
+                'order_services.qty as qty',
+                'order_services.remarks as remarks'
+            )
+            ->get();
+
+        return response()->json([
+            'products' => $products,
+            'services' => $services,
+        ]);
+    }
+
+
+
     public function view($id)
     {
         $order = Order::with(['products', 'services', 'mechanic', 'company'])->findOrFail($id);
@@ -173,7 +217,6 @@ class OrderController extends Controller
     public function update(Request $request, $id, FlasherInterface $flasher)
     {
         $order = Order::find($id);
-
         if (!$order) {
             $flasher->option('position', 'top-center')->addError('Id not found');
             return redirect()->route('order.index')->with('error', 'Id not found');
@@ -182,8 +225,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'company_id' => 'required',
             'mechanic_id' => 'required',
-            'product_id' => 'required',
-            'service_id' => 'required',
+            'product' => 'required',
+            'service' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -218,9 +261,6 @@ class OrderController extends Controller
         if ($request->mechanic_id) {
             $validatedData['mechanic_id'] = $request->mechanic_id;
         }
-        // if ($request->date) {
-        //     $validatedData['date'] = $request->date;
-        // }
         if ($request->vehicle_no) {
             $validatedData['vehicle_no'] = $request->vehicle_no;
         }
@@ -243,25 +283,47 @@ class OrderController extends Controller
         if ($order->update($validatedData)) {
             $orderId = $order->id;
 
-            $productIds = $request->product_id ?? [];
-            $serviceIds = $request->service_id ?? [];
+            $productId = $request->product ?? [];
+            $productQty = $request->product_qty ?? [];
+            $productRemarks = $request->product_remarks ?? [];
+            $productPrice = $request->product_price ?? [];
 
-            // Update or create OrderProducts
-            foreach ($productIds as $productId) {
+            $serviceId = $request->service ?? [];
+            $serviceQty = $request->service_qty ?? [];
+            $serviceRemarks = $request->service_remarks ?? [];
+            $servicePrice = $request->service_price ?? [];
+
+
+            foreach ($productId as $index => $product) {
                 OrderProduct::updateOrCreate(
-                    ['order_id' => $orderId, 'product_id' => $productId],
-                    ['order_id' => $orderId, 'product_id' => $productId]
+                    [
+                        'order_id' => $orderId,
+                        'product_id' => $product,
+                    ],
+                    [
+                        'qty' => $productQty[$index] ?? 0,
+                        'remarks' => $productRemarks[$index] ?? '',
+                        'price' => $productPrice[$index] ?? '',
+                    ]
                 );
             }
 
-            // Update or create OrderServices
-            foreach ($serviceIds as $serviceId) {
+
+            foreach ($serviceId as $index => $service) {
                 OrderService::updateOrCreate(
-                    ['order_id' => $orderId, 'service_id' => $serviceId],
-                    ['order_id' => $orderId, 'service_id' => $serviceId]
+                    [
+                        'order_id' => $orderId,
+                        'service_id' => $service,
+                    ],
+                    [
+                        'qty' => $serviceQty[$index] ?? 0,
+                        'remarks' => $serviceRemarks[$index] ?? '',
+                        'price' => $servicePrice[$index] ?? '',
+                    ]
                 );
             }
         }
+
 
         $order->update($validatedData);
         $flasher->option('position', 'top-center')->addSuccess('Order updated Successfully');
