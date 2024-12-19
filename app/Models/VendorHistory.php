@@ -11,4 +11,9 @@ class VendorHistory extends Model
     use HasFactory, SoftDeletes;
     protected $table = "vendor_history";
     protected $guarded = [];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

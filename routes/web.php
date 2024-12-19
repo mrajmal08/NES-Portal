@@ -82,6 +82,8 @@ Route::post('/vendor/store', [App\Http\Controllers\VendorController::class, 'sto
 Route::get('/vendor/edit/{id}', [App\Http\Controllers\VendorController::class, 'edit'])->name('vendor.edit');
 Route::post('/vendor/update/{id}', [App\Http\Controllers\VendorController::class, 'update'])->name('vendor.update');
 Route::get('/vendor/delete/{id}', [App\Http\Controllers\VendorController::class, 'delete'])->name('vendor.delete');
+Route::get('/vendor/view/{id}', [App\Http\Controllers\VendorController::class, 'view'])->name('vendor.view');
+Route::post('/vendor/payAmount', [App\Http\Controllers\VendorController::class, 'payAmount'])->name('vendor.payAmount');
 
 // Vendor Purchase Routes
 Route::get('/purchase', [App\Http\Controllers\PurchaseController::class, 'index'])->name('purchase.index');

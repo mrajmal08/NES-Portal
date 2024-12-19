@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>All Vendors</h1>
+                    <h1>Vendor History ( <b>{{ App\Models\Vendor::where('id', $id)->value('name') }}</b> )</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -38,52 +38,46 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('vendor.create') }}" class="btn btn-success">Add New Vendor</a>
+                            <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModal">
+                                Pay Amount
+                            </button>
                         </div>
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
-                                        <th>Action</th>
+                                        <th>Purchase Price</th>
+                                        <th>Paid Price</th>
+                                        <th>Payable</th>
+                                        <th>Pay Date</th>
+                                        <th>Status</th>
+                                        <th>Created Date</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vendor as $item)
+                                    @foreach ($vendorHistory as $item)
                                     <tr>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->address }}</td>
-                                        <td>
-                                        <a href="{{ route('vendor.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
-                                                <i class="fas fa-eye">
-                                                </i>
-                                                View
-                                            <a href="{{ route('vendor.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
-                                                <i class="fas fa-pencil-alt">
-                                                </i>
-                                                Edit
-
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-sm btn-danger my-2 delete-record"
-                                                    data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash">
-                                                    </i>
-                                                    Delete </a>
-                                        </td>
+                                        <td>{{ $item->purchase_price }}</td>
+                                        <td>{{ $item->paid_price ?? 0 }}</td>
+                                        <td>{{ $item->payable }}</td>
+                                        <td>{{ $item->pay_date?? 'N/A' }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $item->created_at }}</td>
                                     </tr>
                                     @endforeach
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
-                                        <th>Action</th>
+                                        <th>Purchase Price</th>
+                                        <th>Paid Price</th>
+                                        <th>Payable</th>
+                                        <th>Pay Date</th>
+                                        <th>Status</th>
+                                        <th>Created Date</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -94,6 +88,34 @@
         </div>
     </section>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Total Payable: <b>{{ $totalPayable }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md col-sm ms-auto">
+                    <form method="POST" action="{{ route('vendor.payAmount') }}" class="d-flex justify-content-end align-items-center">
+                        @csrf
+                        <input type="number" class="form-control" name="amount" step="0.01" min="0" />
+                        <input type="hidden" class="form-control" name="vendor_id" value="{{ $id }}" />
+                        <button type="submit" class="btn btn-info ml-2 mr-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @include('layouts.footer')
 
