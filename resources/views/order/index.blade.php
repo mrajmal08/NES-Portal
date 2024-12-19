@@ -82,21 +82,21 @@
                                             </select>
                                         </td>
                                         <td>
-                                        <a href="{{ route('order.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
+                                            <a href="{{ route('order.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
                                                 <i class="fas fa-eye">
                                                 </i>
                                                 View
-                                            <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
-                                                <i class="fas fa-pencil-alt">
-                                                </i>
-                                                Edit
-
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-sm btn-danger my-2 delete-record"
-                                                    data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash">
+                                                <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
+                                                    <i class="fas fa-pencil-alt">
                                                     </i>
-                                                    Delete </a>
+                                                    Edit
+
+                                                    <a href="javascript:void(0)"
+                                                        class="btn btn-sm btn-danger my-2 delete-record"
+                                                        data-id="{{ $item->id }}">
+                                                        <i class="fas fa-trash">
+                                                        </i>
+                                                        Delete </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -104,7 +104,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                    <th>Car Picture</th>
+                                        <th>Car Picture</th>
                                         <th>Company</th>
                                         <th>Vehicle No</th>
                                         <th>Date/Time</th>
@@ -148,28 +148,28 @@
 <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
 
 <script>
-$(document).ready(function () {
-    $('.status-dropdown').on('change', function () {
-        let orderId = $(this).data('id');
-        let newStatus = $(this).val();
+    $(document).ready(function() {
+        $('.status-dropdown').on('change', function() {
+            let orderId = $(this).data('id');
+            let newStatus = $(this).val();
 
-        $.ajax({
-            url: "{{ route('orders.updateStatus') }}",
-            type: "POST",
-            data: {
-                _token: "{{ csrf_token() }}",
-                id: orderId,
-                status: newStatus
-            },
-            success: function (response) {
-                alert(response.message);
-            },
-            error: function () {
-                alert('Error updating status. Please try again.');
-            }
+            $.ajax({
+                url: "{{ route('orders.updateStatus') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: orderId,
+                    status: newStatus
+                },
+                success: function(response) {
+                    alert(response.message);
+                },
+                error: function() {
+                    alert('Error updating status. Please try again.');
+                }
+            });
         });
     });
-});
 </script>
 
 <script>

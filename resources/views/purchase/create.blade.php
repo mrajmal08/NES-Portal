@@ -4,6 +4,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 @endpush
 
@@ -71,12 +72,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
-                                        <label for="date">Date Time</label> <span style="color: red;">*</span>
-                                        <input type="datetime-local" class="form-control" name="date" placeholder="Date and Time">
+                                        <label for="invoice_photo">Invoice Photo</label>
+                                        <input type="file" class="form-control" name="invoice_photo" id="invoice_photo" accept="image/*" capture="environment" placeholder="Invoice Photo" capture>
                                     </div>
                                     <div class="col-md col-sm mb-2">
-                                        <label for="invoice_photo">Invoice Photo</label>
-                                        <input type="file" class="form-control" name="invoice_photo" placeholder="Invoice Photo">
+                                        <!-- <label for="invoice_photo">Invoice Photo</label>
+                                        <input type="file" class="form-control" name="invoice_photo" placeholder="Invoice Photo"> -->
                                     </div>
                                 </div>
                                 <div class="row">

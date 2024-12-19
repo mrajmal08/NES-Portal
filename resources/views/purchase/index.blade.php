@@ -60,7 +60,7 @@
                                         <td>{{ $item->vendor->name ?? 'N/A' }}</td>
                                         <td>{{ $item->product->name ?? 'N/A' }}</td>
                                         <td>{{ $item->service->name ?? 'N/A' }}</td>
-                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->created_at }}</td>
                                         <td>
                                             <div class="">
                                                 <a href="{{ asset('images/invoice_photo') . '/' . $item->invoice_photo }}?text=1"

@@ -48,7 +48,6 @@ class PurchaseController extends Controller
             'vendor_id' => 'required',
             'product_id' => 'required',
             'service_id' => 'required',
-            'date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +78,6 @@ class PurchaseController extends Controller
 
             $data['vendor_id'] = $request->vendor_id;
             $data['product_id'] = $request->product_id;
-            $data['date'] = $request->date;
             $data['service_id'] = $request->service_id;
             $data['notes'] = $request->notes;
 
@@ -117,7 +115,6 @@ class PurchaseController extends Controller
             'vendor_id' => 'required',
             'product_id' => 'required',
             'service_id' => 'required',
-            'date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -154,10 +151,6 @@ class PurchaseController extends Controller
         }
         if ($request->service_id) {
             $validatedData['service_id'] = $request->service_id;
-        }
-
-        if ($request->date) {
-            $validatedData['date'] = $request->date;
         }
         if ($request->notes) {
             $validatedData['notes'] = $request->notes;
