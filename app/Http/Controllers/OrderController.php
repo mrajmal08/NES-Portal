@@ -27,9 +27,16 @@ class OrderController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['products', 'services', 'mechanic', 'company'])->get();
+
+        $orders = Order::with(['products', 'services', 'mechanic', 'company']);
+
+        if ($request->has('status') && $request->status !== '') {
+            $orders = $orders->where('status', $request->status);
+        }
+
+        $orders = $orders->get();
 
         return view('order.index', compact('orders'));
     }
