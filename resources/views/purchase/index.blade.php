@@ -46,8 +46,6 @@
                                 <thead>
                                     <tr>
                                         <th>Vendor</th>
-                                        <th>Product</th>
-                                        <th>Service</th>
                                         <th>Date</th>
                                         <th>Invoice Photo</th>
                                         <th>Notes</th>
@@ -58,8 +56,6 @@
                                     @foreach ($purchase as $item)
                                     <tr>
                                         <td>{{ $item->vendor->name ?? 'N/A' }}</td>
-                                        <td>{{ $item->product->name ?? 'N/A' }}</td>
-                                        <td>{{ $item->service->name ?? 'N/A' }}</td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             <div class="">
@@ -95,8 +91,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>Vendor</th>
-                                        <th>Product</th>
-                                        <th>Service</th>
                                         <th>Date</th>
                                         <th>Invoice Photo</th>
                                         <th>Notes</th>

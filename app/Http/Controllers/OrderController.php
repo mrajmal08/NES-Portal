@@ -250,7 +250,7 @@ class OrderController extends Controller
             $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
 
             $file->move(public_path('images/car_pictures'), $filename);
-            $data['car_picture'] = $filename;
+            $validatedData['car_picture'] = $filename;
         }
 
 

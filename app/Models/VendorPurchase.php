@@ -17,13 +17,13 @@ class VendorPurchase extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'purchase_products', 'purchase_id', 'product_id')->withPivot('qty', 'remarks', 'price');
     }
 
-    public function service()
+    public function services()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsToMany(Service::class, 'purchase_services', 'purchase_id', 'service_id')->withPivot('qty', 'remarks', 'price');
     }
 }

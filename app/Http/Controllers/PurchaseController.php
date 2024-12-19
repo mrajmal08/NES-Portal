@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\purchaseProduct;
 use App\Models\purchaseService;
 use App\Models\VendorPurchase;
-use App\Models\Company;
+use App\Models\VendorHistory;
 use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Service;
 use Carbon\Carbon;
 use Validator;
 use Redirect;
+use DB;
 
 class PurchaseController extends Controller
 {
@@ -28,7 +29,7 @@ class PurchaseController extends Controller
     }
     public function index()
     {
-        $purchase = VendorPurchase::with(['vendor', 'product', 'service'])->get();
+        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->get();
 
         return view('purchase.index', compact('purchase'));
     }
@@ -46,8 +47,8 @@ class PurchaseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'required',
-            'product_id' => 'required',
-            'service_id' => 'required',
+            'product' => 'required',
+            'service' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -77,11 +78,63 @@ class PurchaseController extends Controller
             }
 
             $data['vendor_id'] = $request->vendor_id;
-            $data['product_id'] = $request->product_id;
-            $data['service_id'] = $request->service_id;
             $data['notes'] = $request->notes;
 
-            VendorPurchase::create($data);
+            $purchase = VendorPurchase::create($data);
+
+            if ($purchase) {
+                $purchaseId = $purchase->id;
+
+                $productId = $request->product ?? [];
+                $productQty = $request->product_qty ?? [];
+                $productRemarks = $request->product_remarks ?? [];
+                $productPrice = $request->product_price ?? [];
+
+                $serviceId = $request->service ?? [];
+                $serviceQty = $request->service_qty ?? [];
+                $serviceRemarks = $request->service_remarks ?? [];
+                $servicePrice = $request->service_price ?? [];
+
+
+                foreach ($productId as $index => $product) {
+                    purchaseProduct::create([
+                        'purchase_id' => $purchaseId,
+                        'product_id' => $product,
+                        'qty' => $productQty[$index] ?? 0,
+                        'remarks' => $productRemarks[$index] ?? '',
+                        'price' => $productPrice[$index] ?? '',
+                    ]);
+                }
+
+
+                foreach ($serviceId as $index => $service) {
+                    purchaseService::create([
+                        'purchase_id' => $purchaseId,
+                        'service_id' => $service,
+                        'qty' => $serviceQty[$index] ?? 0,
+                        'remarks' => $serviceRemarks[$index] ?? 0,
+                        'price' => $servicePrice[$index] ?? 0,
+                    ]);
+                }
+
+                $lastEntry = VendorHistory::where('vendor_id', $request->vendor_id)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+
+                $remainingPayable = $request->total_price;
+
+                if ($lastEntry) {
+                    $remainingPayable += $lastEntry->payable;
+                }
+
+                VendorHistory::create([
+                    'vendor_id' => $request->vendor_id,
+                    'purchase_price' => $request->total_price,
+                    'payable' => $remainingPayable,
+                    'status' => 'Added',
+                ]);
+            }
+
 
             $flasher->option('position', 'top-center')->addSuccess('Order Purchase added Successfully');
             return redirect()->route('purchase.index')->with('message', 'Order Purchase added Successfully');
@@ -94,12 +147,51 @@ class PurchaseController extends Controller
 
     public function edit($id)
     {
-        $purchase = VendorPurchase::with(['vendor', 'product', 'service'])->findOrFail($id);
+        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->findOrFail($id);
         $vendor =  Vendor::orderBy('id', 'DESC')->get();
         $product = Product::orderBy('id', 'DESC')->get();
         $service = Service::orderBy('id', 'DESC')->get();
 
-        return view('purchase.edit', compact('purchase', 'vendor', 'product', 'service'));
+        $selectedProducts = $purchase->products->pluck('id')->toArray();
+        $selectedServices = $purchase->services->pluck('id')->toArray();
+
+        return view('purchase.edit', compact('purchase', 'vendor', 'product', 'service', 'selectedProducts', 'selectedServices'));
+    }
+
+
+    public function getPurchaseData(Request $request)
+    {
+        $purchase = VendorPurchase::findOrFail($request->purchase_id);
+
+        $products = DB::table('purchase_products')
+            ->where('purchase_id', $purchase->id)
+            ->join('products', 'products.id', '=', 'purchase_products.product_id')
+            ->select(
+                'products.id as id',
+                'products.name as name',
+                'purchase_products.price as price',
+                'purchase_products.qty as qty',
+                'purchase_products.remarks as remarks'
+            )
+            ->get();
+
+
+        $services = DB::table('purchase_services')
+            ->where('purchase_id', $purchase->id)
+            ->join('services', 'services.id', '=', 'purchase_services.service_id')
+            ->select(
+                'services.id as id',
+                'services.name as name',
+                'purchase_services.price as price',
+                'purchase_services.qty as qty',
+                'purchase_services.remarks as remarks'
+            )
+            ->get();
+
+        return response()->json([
+            'products' => $products,
+            'services' => $services,
+        ]);
     }
 
     public function update(Request $request, $id, FlasherInterface $flasher)
@@ -113,8 +205,8 @@ class PurchaseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'required',
-            'product_id' => 'required',
-            'service_id' => 'required',
+            'product' => 'required',
+            'service' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -138,25 +230,84 @@ class PurchaseController extends Controller
             $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
 
             $file->move(public_path('images/invoice_photos'), $filename);
-            $data['invoice_photo'] = $filename;
+            $validatedData['invoice_photo'] = $filename;
         }
-
-
 
         if ($request->vendor_id) {
             $validatedData['vendor_id'] = $request->vendor_id;
-        }
-        if ($request->product_id) {
-            $validatedData['product_id'] = $request->product_id;
-        }
-        if ($request->service_id) {
-            $validatedData['service_id'] = $request->service_id;
         }
         if ($request->notes) {
             $validatedData['notes'] = $request->notes;
         }
 
-        $purchase->update($validatedData);
+
+
+        if ($purchase->update($validatedData)) {
+            $purchaseId = $purchase->id;
+
+            $productId = $request->product ?? [];
+            $productQty = $request->product_qty ?? [];
+            $productRemarks = $request->product_remarks ?? [];
+            $productPrice = $request->product_price ?? [];
+
+            $serviceId = $request->service ?? [];
+            $serviceQty = $request->service_qty ?? [];
+            $serviceRemarks = $request->service_remarks ?? [];
+            $servicePrice = $request->service_price ?? [];
+
+
+            foreach ($productId as $index => $product) {
+                purchaseProduct::updateOrCreate(
+                    [
+                        'purchase_id' => $purchaseId,
+                        'product_id' => $product,
+                    ],
+                    [
+                        'qty' => $productQty[$index] ?? 0,
+                        'remarks' => $productRemarks[$index] ?? '',
+                        'price' => $productPrice[$index] ?? '',
+                    ]
+                );
+            }
+
+            foreach ($serviceId as $index => $service) {
+                purchaseService::updateOrCreate(
+                    [
+                        'purchase_id' => $purchaseId,
+                        'service_id' => $service,
+                    ],
+                    [
+                        'qty' => $serviceQty[$index] ?? 0,
+                        'remarks' => $serviceRemarks[$index] ?? '',
+                        'price' => $servicePrice[$index] ?? '',
+                    ]
+                );
+            }
+
+            $lastEntry = VendorHistory::where('vendor_id', $request->vendor_id)
+                ->orderByDesc('id')
+                ->first();
+
+            $remainingPayable = $lastEntry->payable ?? 0;
+            if ($request->total_price > $lastEntry->purchase_price) {
+
+                $price = $request->total_price - $lastEntry->purchase_price;
+                $remainingPayable =  $remainingPayable + $price;
+            } elseif ($request->total_price < $lastEntry->purchase_price) {
+
+                $price =  $lastEntry->purchase_price - $request->total_price;
+                $remainingPayable = $remainingPayable - $price;
+            }
+
+            VendorHistory::create([
+                'vendor_id' => $request->vendor_id,
+                'purchase_price' => $request->total_price,
+                'payable' => $remainingPayable,
+                'status' => 'Updated',
+            ]);
+        }
+
+
         $flasher->option('position', 'top-center')->addSuccess('Order Purchase updated Successfully');
         return redirect()->route('purchase.index')->with('message', 'Order Purchase updated Successfully');
     }
@@ -170,8 +321,18 @@ class PurchaseController extends Controller
         }
 
         try {
-            $purchase->delete();
-            return response()->json(['success' => 'Order Purchase deleted successfully.']);
+            $purchaseId = $purchase->id;
+
+            if ($purchase->delete()) {
+                purchaseProduct::where('purchase_id', $purchaseId)->update([
+                    'deleted_at' => now()
+                ]);
+                purchaseService::where('purchase_id', $purchaseId)->update([
+                    'deleted_at' => now()
+                ]);
+            }
+
+            return response()->json(['success' => 'Order deleted successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], 500);
         }
