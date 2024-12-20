@@ -12,7 +12,8 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
+              @if (auth()->user()->role_id == 1)
+              <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link {{ Route::currentRouteName() === 'users.index' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Users</p>
@@ -61,6 +62,21 @@
                         <p>Vendor Purchases</p>
                     </a>
                 </li>
+                @elseif (auth()->user()->role_id == 2)
+                <li class="nav-item">
+                    <a href="{{ route('order.index') }}" class="nav-link {{ Route::currentRouteName() === 'order.index' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>Order Management</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('purchase.index') }}" class="nav-link {{ Route::currentRouteName() === 'purchase.index' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-shopping-basket"></i>
+                        <p>Vendor Purchases</p>
+                    </a>
+                </li>
+              @endif
 
             </ul>
         </nav>
