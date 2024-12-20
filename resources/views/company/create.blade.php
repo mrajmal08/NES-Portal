@@ -47,20 +47,6 @@
                                         <input type="hidden" name="status" value="active">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                    <label for="status">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option disabled selected>--Select One--</option>
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                    </div>
-                                    <div class="col">
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="card-footer">

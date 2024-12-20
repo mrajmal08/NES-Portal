@@ -57,7 +57,7 @@ class CompanyController extends Controller
             $data['name'] = $request->name;
             $data['phone'] = $request->phone;
             $data['address'] = $request->address;
-            $data['status'] = $request->status;
+            $data['status'] = 'active';
 
             Company::create($data);
 
