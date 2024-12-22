@@ -29,7 +29,7 @@ class PurchaseController extends Controller
     }
     public function index()
     {
-        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->get();
+        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->orderBy('id', 'Desc')->get();
 
         return view('purchase.index', compact('purchase'));
     }

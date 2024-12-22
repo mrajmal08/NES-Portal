@@ -30,7 +30,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
 
-        $orders = Order::with(['products', 'services', 'mechanic', 'company']);
+        $orders = Order::with(['products', 'services', 'mechanic', 'company'])->orderBy('id', 'Desc');
 
         if ($request->has('status') && $request->status !== '') {
             $orders = $orders->where('status', $request->status);

@@ -24,7 +24,7 @@ class VendorController extends Controller
     }
     public function index()
     {
-        $vendor = Vendor::all();
+        $vendor = Vendor::orderBy('id', 'Desc')->get();
 
         return view('vendor.index', compact('vendor'));
     }

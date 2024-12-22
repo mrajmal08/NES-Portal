@@ -22,7 +22,7 @@ class MechanicController extends Controller
     }
     public function index()
     {
-        $mechanic = Mechanic::all();
+        $mechanic = Mechanic::orderBy('id', 'Desc')->get();
 
         return view('mechanic.index', compact('mechanic'));
     }

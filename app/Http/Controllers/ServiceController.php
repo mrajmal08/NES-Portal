@@ -22,7 +22,7 @@ class ServiceController extends Controller
     }
     public function index()
     {
-        $service = Service::all();
+        $service = Service::orderBy('id', 'Desc')->get();
 
         return view('service.index', compact('service'));
     }
