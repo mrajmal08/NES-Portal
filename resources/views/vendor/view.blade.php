@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Vendor History ( <b>{{ App\Models\Vendor::where('id', $id)->value('name') }}</b> )</h1>
+                    <h1>Vendor History ( <b>{{ App\Models\Vendor::where('id', $id)->value('name') ?? 0 }}</b> )</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -35,12 +35,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card">
-                        <div class="card-header">
-                            <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModal">
-                                Pay Amount
-                            </button>
+                        <div class="row align-items-cente m-4">
+                            <div class="col-md-8 col-sm-12 mb-2">
+                                <h4>Total Payable: <b style="color: green;">{{ $totalPayable }}</b></h4>
+                            </div>
+                            <div class="col-md-4 col-sm-12 ms-auto">
+                                <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModal">
+                                    Pay Amount
+                                </button>
+                            </div>
                         </div>
 
                         <!-- /.card-header -->
@@ -117,7 +121,7 @@
 </div>
 
 
-@include('layouts.footer')
+<!-- @include('layouts.footer') -->
 
 <aside class="control-sidebar control-sidebar-dark">
 </aside>

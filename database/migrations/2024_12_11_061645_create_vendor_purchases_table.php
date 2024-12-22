@@ -20,6 +20,7 @@ class CreateVendorPurchasesTable extends Migration
             $table->bigInteger('service_id')->nullable();
             $table->dateTime('date')->nullable();
             $table->text('invoice_photo')->nullable();
+            $table->string('total_price')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

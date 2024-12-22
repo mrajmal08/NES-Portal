@@ -33,21 +33,21 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-4 col-sm-12">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" value="{{ $company->name }}" placeholder="Name" required>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4 col-sm-12">
                                         <label for="phone">Phone</label>
                                         <input type="number" class="form-control" name="phone" value="{{ $company->phone }}" placeholder="Phone Number">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4 col-sm-12">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" name="address" value="{{ $company->address }}" placeholder="Address">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-4 col-sm-12 mt-2">
                                         <label for="status">Status</label>
                                         <select name="status" class="form-control">
                                             <option disabled {{ empty($company->status) ? 'selected' : '' }}>--Select One--</option>
@@ -55,7 +55,9 @@
                                             <option value="inactive" {{ $company->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                                         </select>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="vat_no">Vat No</label>
+                                        <input type="text" class="form-control" name="vat_no" value="{{ $company->vat_no }}" placeholder="">
                                     </div>
                                     <div class="col">
                                     </div>

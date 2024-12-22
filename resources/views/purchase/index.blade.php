@@ -45,9 +45,9 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Purchase ID</th>
                                         <th>Vendor</th>
                                         <th>Date</th>
-                                        <th>Invoice Photo</th>
                                         <th>Notes</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,34 +55,26 @@
                                 <tbody>
                                     @foreach ($purchase as $item)
                                     <tr>
+                                        <td>#00{{ $item->id }}</td>
                                         <td>{{ $item->vendor->name ?? 'N/A' }}</td>
                                         <td>{{ $item->created_at }}</td>
-                                        <td>
-                                            <div class="">
-                                                <a href="{{ asset('images/invoice_photo') . '/' . $item->invoice_photo }}?text=1"
-                                                    data-toggle="lightbox"
-                                                    data-title="{{ $item->date }}"
-                                                    data-gallery="gallery">
-                                                    <img src="{{ asset('images/invoice_photo') . '/' . $item->invoice_photo }}?text=1"
-                                                        class="img-fluid" alt="{{ $item->date }}"
-                                                        style="width:40px" />
-                                                </a>
-                                            </div>
-                                        </td>
-
                                         <td>{{ $item->notes }}</td>
                                         <td>
-                                            <a href="{{ route('purchase.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
-                                                <i class="fas fa-pencil-alt">
+                                            <a href="{{ route('purchase.view', [$item->id]) }}" class="btn btn-sm btn-info my-2 mr-1">
+                                                <i class="fas fa-eye">
                                                 </i>
-                                                Edit
-
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-sm btn-danger my-2 delete-record"
-                                                    data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash">
+                                                View
+                                                <a href="{{ route('purchase.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
+                                                    <i class="fas fa-pencil-alt">
                                                     </i>
-                                                    Delete </a>
+                                                    Edit
+
+                                                    <a href="javascript:void(0)"
+                                                        class="btn btn-sm btn-danger my-2 delete-record"
+                                                        data-id="{{ $item->id }}">
+                                                        <i class="fas fa-trash">
+                                                        </i>
+                                                        Delete </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -90,9 +82,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>Purchase ID</th>
                                         <th>Vendor</th>
                                         <th>Date</th>
-                                        <th>Invoice Photo</th>
                                         <th>Notes</th>
                                         <th>Action</th>
                                     </tr>
@@ -203,23 +195,23 @@
 </script>
 
 <script>
-            $(function() {
-                $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                    event.preventDefault();
-                    $(this).ekkoLightbox({
-                        alwaysShowClose: true
-                    });
-                });
+    $(function() {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
+        });
 
-                $('.filter-container').filterizr({
-                    gutterPixels: 3
-                });
-                $('.btn[data-filter]').on('click', function() {
-                    $('.btn[data-filter]').removeClass('active');
-                    $(this).addClass('active');
-                });
-            })
-        </script>
+        $('.filter-container').filterizr({
+            gutterPixels: 3
+        });
+        $('.btn[data-filter]').on('click', function() {
+            $('.btn[data-filter]').removeClass('active');
+            $(this).addClass('active');
+        });
+    })
+</script>
 
 @endpush
 @endsection

@@ -45,6 +45,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Product No</th>
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
@@ -55,6 +56,7 @@
                                 <tbody>
                                     @foreach ($product as $item)
                                     <tr>
+                                        <td>{{ $item->product_no }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->status }}</td>
@@ -78,6 +80,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>Product No</th>
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>

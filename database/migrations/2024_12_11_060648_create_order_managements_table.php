@@ -15,14 +15,17 @@ class CreateOrderManagementsTable extends Migration
     {
         Schema::create('order_managements', function (Blueprint $table) {
             $table->id();
-            $table->string('car_picture')->nullable();
+            $table->text('car_picture')->nullable();
             $table->bigInteger('company_id')->nullable();
             $table->bigInteger('mechanic_id')->nullable();
             $table->dateTime('date')->nullable();
+            $table->string('vehicle_name')->nullable();
             $table->string('vehicle_no')->nullable();
             $table->string('client_name')->nullable();
             $table->string('client_phone')->nullable();
             $table->string('status')->nullable();
+            $table->string('status_update')->nullable();
+            $table->dateTime('delivery_date')->nullable();
             $table->string('total_price')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

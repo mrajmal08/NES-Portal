@@ -33,6 +33,10 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
+                                        <label for="product_no">Product No</label>
+                                        <input type="text" class="form-control" name="product_no" placeholder="Product No" required>
+                                    </div>
+                                    <div class="col-md col-sm mb-2">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" placeholder="Name" required>
                                     </div>
@@ -40,17 +44,16 @@
                                         <label for="price">Price</label>
                                         <input type="number" class="form-control" name="price" placeholder="Price" step="0.01" min="0">
                                     </div>
-                                    <div class="col-md col-sm mb-2">
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2">
                                         <label for="remarks">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" placeholder="Write Something ...">
                                     </div>
-                                </div>
                                 <div class="form-check">
                                     <input class="form-check-input" name="checked" value="1" id="remarksCheckbox" type="checkbox">
                                     <label class="form-check-label" for="remarksCheckbox">Checkbox</label>
                                     <span style="color: gray;">(optional)</span>
                                 </div>
-
                             </div>
 
                             <div class="card-footer">

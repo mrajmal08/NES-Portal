@@ -6,14 +6,13 @@
 @section('content')
 @include('layouts.sidebar')
 
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Invoice</h1>
+                    <!-- <h1>Invoice</h1> -->
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -22,51 +21,27 @@
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <!-- Main content -->
                     <div class="invoice p-3 mb-3">
-                        <!-- title row -->
                         <div class="row">
                             <div class="col-12">
                                 <h4>
-                                    <i class="fas fa-globe"></i> NEC Portal. Order ID: #00{{ $order->id }}
-                                    <small class="float-right">Date: {{ $order->created_at->format('d-m-Y') }}</small>
+                                    <i class="fas fa-globe"></i> NEC Portal. Purchase ID: #00{{ $purchase->id }}
+                                    <small class="float-right">Date: {{ $purchase->created_at->format('d-m-Y') }}</small>
                                 </h4>
                             </div>
-                            <!-- /.col -->
                         </div>
-                        <!-- info row -->
-                        <div class="row invoice-info mb-3">
-                            <div class="col-sm-4 invoice-col mb-3">
-                                <b>Company Name:</b> {{ $order->company->name ?? 'N/A' }}<br>
-                                <b>Mechanic Name:</b> {{ $order->mechanic->name ?? 'N/A' }}<br>
-                                <b>Order Status:</b> {{ $order->status }}<br>
-                                <b>Delivery Date:</b> {{ $order->delivery_date }}<br>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col mb-3">
-                                <b>Vehicle Details:</b><br>
-                                <b>Vehicle Name:</b> {{ $order->vehicle_name }}<br>
-                                <b>Vehicle No:</b> {{ $order->vehicle_no }}<br>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                                <b>Client Details </b><br>
-                                <b>Client Name:</b> {{ $order->client_name }}<br>
-                                <b>Client Phone:</b> {{ $order->client_phone }}<br>
-                            </div>
-                            <!-- /.col -->
+
+                        <div class="mb-3">
                         </div>
-                        <!-- /.row -->
 
                         <h3>Products Detail:</h3>
-                        <!-- Table row -->
                         <div class="row">
                             <div class="col-12 table-responsive">
                                 <table class="table table-striped table-bordered">
@@ -80,9 +55,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($order->products as $product)
+                                        @foreach ($purchase->products as $product)
                                         <tr>
-                                            <td>{{ $product->id }}</td>
+                                            <td>{{ $product->product_no }}</td>
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->pivot->qty }}</td>
                                             <td>{{ $product->pivot->remarks }}</td>
@@ -93,11 +68,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- /.col -->
                         </div>
 
                         <h3>Services Detail:</h3>
-                        <!-- Table row -->
                         <div class="row">
                             <div class="col-12 table-responsive">
                                 <table class="table table-striped table-bordered">
@@ -111,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($order->services as $service)
+                                        @foreach ($purchase->services as $service)
                                         <tr>
                                             <td>{{ $service->id }}</td>
                                             <td>{{ $service->name }}</td>
@@ -126,17 +99,17 @@
                             </div>
                         </div>
 
-                        <h3 class="mb-4">Order Images:</h3>
+                        <h3 class="mb-4">purchase Images:</h3>
                         <div class="row g-2 mb-4">
-                            @foreach(explode(',', $order->car_picture) as $image)
+                            @foreach(explode(',', $purchase->invoice_photo) as $image)
                             <div class="col-4">
                                 <div class="gallery-item gray">
-                                    <a href="{{ asset('images/car_pictures/' . $image) }}?text=1"
+                                    <a href="{{ asset('images/invoice_photo/' . $image) }}?text=1"
                                         data-toggle="lightbox"
-                                        data-title="{{ $order->date }}"
+                                        data-title="{{ $purchase->date }}"
                                         data-gallery="gallery">
-                                        <img src="{{ asset('images/car_pictures/' . $image) }}?text=1"
-                                            class="img-fluid" alt="{{ $order->date }}"
+                                        <img src="{{ asset('images/invoice_photo/' . $image) }}?text=1"
+                                            class="img-fluid" alt="{{ $purchase->date }}"
                                             style="width:40px" />
                                     </a>
                                 </div>
@@ -146,11 +119,11 @@
 
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
-                                <p class="lead"><b>Order By:</b> <span>{{ auth()->user()->name }}</span></p>
-                                <p class="lead"><b>Order Note:</b> <span>{{ $order->notes }}</span></p>
+                                <p class="lead"><b>Purchase By:</b> <span>{{ auth()->user()->name }}</span></p>
+                                <p class="lead"><b>Purchase Note:</b> <span>{{ $purchase->notes }}</span></p>
                             </div>
                             <div class="col-md-4 col-sm-12">
-                                <p class="lead"><b>Total Price:</b> <span class="float-md-right">{{ $order->total_price }}</span></p>
+                                <p class="lead"><b>Total Price:</b> <span class="float-md-right">{{ $purchase->total_price }}</span></p>
                                 <p class="lead mt-3"><b>Signature:</b> <span class="float-md-right">________________________</span></p>
                             </div>
                         </div>

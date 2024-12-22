@@ -37,6 +37,7 @@ class MechanicController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|unique:mechanics',
+            'phone' => 'required',
             'type' => 'required',
 
         ]);
@@ -53,6 +54,7 @@ class MechanicController extends Controller
         }
         try {
             $data['name'] = $request->name;
+            $data['phone'] = $request->phone;
             $data['type'] = $request->type;
             $data['address'] = $request->address;
 
@@ -89,6 +91,7 @@ class MechanicController extends Controller
                 Rule::unique('mechanics')->ignore($mechanic->id),
             ],
             'type' => 'required',
+            'phone' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -105,6 +108,9 @@ class MechanicController extends Controller
 
         if ($request->name) {
             $validatedData['name'] = $request->name;
+        }
+        if ($request->phone) {
+            $validatedData['phone'] = $request->phone;
         }
         if ($request->type) {
             $validatedData['type'] = $request->type;

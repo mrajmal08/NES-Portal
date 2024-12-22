@@ -93,5 +93,8 @@ Route::get('/purchase/edit/{id}', [App\Http\Controllers\PurchaseController::clas
 Route::post('/purchase/update/{id}', [App\Http\Controllers\PurchaseController::class, 'update'])->name('purchase.update');
 Route::get('/purchase/delete/{id}', [App\Http\Controllers\PurchaseController::class, 'delete'])->name('purchase.delete');
 Route::get('/get-purchase-data', [App\Http\Controllers\PurchaseController::class, 'getPurchaseData'])->name('get.purchase.data');
+Route::get('/purchase/view/{id}', [App\Http\Controllers\PurchaseController::class, 'view'])->name('purchase.view');
+
+
 
 

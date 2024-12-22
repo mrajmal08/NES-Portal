@@ -41,10 +41,14 @@
                                         <label for="type">Type</label>
                                         <input type="text" class="form-control" name="type" value="{{ $mechanic->type }}" placeholder="Type">
                                     </div>
-                                    <div class="col-md col-sm mb-2">
-                                        <label for="address">Address</label>
-                                        <input type="text" class="form-control" name="address" value="{{ $mechanic->address }}" placeholder="address">
+                                    <div class="col-md-4 col-sm-12 mb-2">
+                                        <label for="phone">Phone</label>
+                                        <input type="text" class="form-control" name="phone" value="{{ $mechanic->phone }}" placeholder="Phone">
                                     </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" name="address" value="{{ $mechanic->address }}" placeholder="address">
                                 </div>
                             </div>
 

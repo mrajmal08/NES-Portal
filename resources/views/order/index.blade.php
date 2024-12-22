@@ -35,23 +35,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card">
-
                         <div class="row align-items-cente m-4">
-
                             <div class="col-md-8 col-sm-12 mb-2">
                                 <a href="{{ route('order.create') }}" class="btn btn-success">Add New Order</a>
                             </div>
-
-
                             <div class="col-md-4 col-sm-12 ms-auto">
                                 <form method="GET" action="{{ route('order.index') }}" class="d-flex justify-content-end align-items-center">
                                     <select class="form-control" name="status">
                                         <option disabled selected>Filter By Status</option>
                                         <option value="process">Process</option>
-                                        <option value="delivered">Delivered</option>
                                         <option value="completed">Completed</option>
+                                        <option value="delivered">Delivered</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary ml-2 mr-2">Filter</button>
                                     <a href="{{ route('order.index') }}" class="btn btn-secondary">Cancel</a>
@@ -65,10 +60,11 @@
                             <table id="example1" class="table table-bordered table-striped ">
                                 <thead>
                                     <tr>
-                                        <th>Car Picture</th>
+                                        <!-- <th>Car Picture</th> -->
                                         <th>Company</th>
                                         <th>Vehicle No</th>
-                                        <th>Date/Time</th>
+                                        <th>Order Date</th>
+                                        <th>Delivery Date</th>
                                         <th>Total Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -77,7 +73,7 @@
                                 <tbody>
                                     @foreach ($orders as $item)
                                     <tr>
-                                        <td>
+                                        <!-- <td>
                                             <div class="">
                                                 <a href="{{ asset('images/car_pictures') . '/' . $item->car_picture }}?text=1"
                                                     data-toggle="lightbox"
@@ -88,10 +84,11 @@
                                                         style="width:40px" />
                                                 </a>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td>{{ $item->company->name ?? 'N/A' }}</td>
                                         <td>{{ $item->vehicle_no }}</td>
                                         <td>{{ $item->created_at }}</td>
+                                        <td>{{ $item->delivery_date }}</td>
                                         <td>{{ $item->total_price }}</td>
 
                                         <td>
@@ -124,10 +121,11 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Car Picture</th>
+                                        <!-- <th>Car Picture</th> -->
                                         <th>Company</th>
                                         <th>Vehicle No</th>
-                                        <th>Date/Time</th>
+                                        <th>Order Date</th>
+                                        <th>Delivery Date</th>
                                         <th>Total Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -265,7 +263,7 @@
     });
 </script>
 
-<script>
+<!-- <script>
     $(function() {
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
@@ -282,7 +280,7 @@
             $(this).addClass('active');
         });
     })
-</script>
+</script> -->
 
 @endpush
 @endsection

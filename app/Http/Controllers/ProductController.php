@@ -37,6 +37,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|unique:products',
+            'product_no' => 'required',
             'price' => 'required',
 
         ]);
@@ -57,6 +58,7 @@ class ProductController extends Controller
             $data['price'] = $request->price;
             $data['status'] = 'active';
             $data['remarks'] = $request->remarks;
+            $data['product_no'] = $request->product_no;
             $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 
             Product::create($data);
@@ -92,6 +94,7 @@ class ProductController extends Controller
                 Rule::unique('products')->ignore($product->id),
             ],
             'status' => 'required',
+            'product_no' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -117,6 +120,9 @@ class ProductController extends Controller
         }
         if ($request->remarks) {
             $validatedData['remarks'] = $request->remarks;
+        }
+        if ($request->product_no) {
+            $validatedData['product_no'] = $request->product_no;
         }
         $validatedData['checked'] = $request->has('checked') ? 1 : 0;
 

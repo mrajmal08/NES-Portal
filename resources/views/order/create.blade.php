@@ -43,7 +43,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="company_id">Company</label> <span style="color: red;">*</span>
-                                        <select name="company_id" class="form-control">
+                                        <select name="company_id" class="form-control" required>
                                             <option disabled selected>--Select One--</option>
                                             @foreach ($company as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-lg col-md -col-sm mb-2">
                                         <label for="mechanic_id">Mechanic</label><span style="color: red;">*</span>
-                                        <select name="mechanic_id" class="form-control">
+                                        <select name="mechanic_id" class="form-control" required>
                                             <option disabled selected>--Select One--</option>
                                             @foreach ($mechanic as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -64,7 +64,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
-                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple>
+                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple required>
                                             <option disabled>--Select One--</option>
                                             @foreach ($product as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
@@ -74,29 +74,30 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="row mt-3">
                                     <div class="col-md col-sm">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="details-product-table-body"></tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="details-product-table-body"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row mt-3">
                                     <div class="col-md col-sm mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
-                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple>
+                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple required>
                                             <option disabled>--Select One--</option>
                                             @foreach ($service as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
@@ -109,19 +110,21 @@
 
                                 <div class="row mt-3">
                                     <div class="col-md col-sm">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="details-service-table-body"></tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="details-service-table-body"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -134,18 +137,25 @@
                                     </div>
                                 </div>
 
-
                                 <div class="mt-2">
                                     <h2>Vehicle Details:</h2>
                                 </div>
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="name">Car Picture</label>
-                                        <input type="file" class="form-control" name="car_picture" id="car_picture" accept="image/*" capture="environment" placeholder="Car Picture" capture>
+                                        <input type="file" class="form-control" name="car_picture[]" multiple id="car_picture" accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" capture="environment" placeholder="Car Picture" capture required>
                                     </div>
                                     <div class="col-md col-sm mb-2">
                                         <label for="vehicle_no">Vehicle Number</label>
-                                        <input type="text" class="form-control" name="vehicle_no" placeholder="Vehicle Number">
+                                        <input type="text" class="form-control" name="vehicle_no" placeholder="Vehicle Number" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mb-2">
+                                        <label for="vehicle_name">Vehicle Name</label>
+                                        <input type="text" class="form-control" name="vehicle_name" placeholder="Vehicle Name" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mb-2">
                                     </div>
                                 </div>
                                 <div class="mt-2">

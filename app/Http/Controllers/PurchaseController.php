@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
-use App\Models\purchaseProduct;
-use App\Models\purchaseService;
+use App\Models\PurchaseProduct;
+use App\Models\PurchaseService;
 use App\Models\VendorPurchase;
 use App\Models\VendorHistory;
 use App\Models\Vendor;
@@ -65,19 +65,23 @@ class PurchaseController extends Controller
         try {
 
             $timestamp = Carbon::now()->timestamp;
-
-            if ($request->hasFile('invoice_photo')) {
-
-                $file = $request->file('invoice_photo');
-                $timestamp = now()->timestamp;
-                $extension = $file->getClientOriginalExtension();
-                $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
-
-                $file->move(public_path('images/invoice_photo'), $filename);
-                $data['invoice_photo'] = $filename;
+            $documents = ['invoice_photo'];
+            foreach ($documents as $doc) {
+                if ($request->hasFile($doc)) {
+                    $filenames = [];
+                    foreach ($request->file($doc) as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $filename = rand(99999, 234567) . $timestamp . '.' . $extension;
+                        $file->move(public_path('images/invoice_photo'), $filename);
+                        $filenames[] = $filename;
+                    }
+                    $data[$doc] = implode(',', $filenames);
+                }
             }
 
+
             $data['vendor_id'] = $request->vendor_id;
+            $data['total_price'] = $request->total_price;
             $data['notes'] = $request->notes;
 
             $purchase = VendorPurchase::create($data);
@@ -97,7 +101,7 @@ class PurchaseController extends Controller
 
 
                 foreach ($productId as $index => $product) {
-                    purchaseProduct::create([
+                    PurchaseProduct::create([
                         'purchase_id' => $purchaseId,
                         'product_id' => $product,
                         'qty' => $productQty[$index] ?? 0,
@@ -108,7 +112,7 @@ class PurchaseController extends Controller
 
 
                 foreach ($serviceId as $index => $service) {
-                    purchaseService::create([
+                    PurchaseService::create([
                         'purchase_id' => $purchaseId,
                         'service_id' => $service,
                         'qty' => $serviceQty[$index] ?? 0,
@@ -143,6 +147,13 @@ class PurchaseController extends Controller
             $flasher->option('position', 'top-center')->addError('Something went wrong');
             return redirect()->route('purchase.index')->with('message', 'Something went wrong');
         }
+    }
+
+    public function view($id)
+    {
+        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->findOrFail($id);
+
+        return view('purchase.view', compact('purchase'));
     }
 
     public function edit($id)
@@ -221,26 +232,35 @@ class PurchaseController extends Controller
         }
 
         $timestamp = Carbon::now()->timestamp;
+        $documentFields = [
+            'invoice_photo'
+        ];
 
-        if ($request->hasFile('invoice_photo')) {
-
-            $file = $request->file('invoice_photo');
-            $timestamp = now()->timestamp;
-            $extension = $file->getClientOriginalExtension();
-            $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
-
-            $file->move(public_path('images/invoice_photos'), $filename);
-            $validatedData['invoice_photo'] = $filename;
+        $validatedData = [];
+        foreach ($documentFields as $field) {
+            if ($request->hasFile($field)) {
+                $newFilesArray = [];
+                foreach ($request->file($field) as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = rand(99999, 234567) . $timestamp . '.' . $extension;
+                    $file->move(public_path('images/invoice_photo'), $filename);
+                    $newFilesArray[] = $filename;
+                }
+                $validatedData[$field] = implode(',', $newFilesArray);
+            }
         }
+
+
 
         if ($request->vendor_id) {
             $validatedData['vendor_id'] = $request->vendor_id;
         }
+        if ($request->total_price) {
+            $validatedData['total_price'] = $request->total_price;
+        }
         if ($request->notes) {
             $validatedData['notes'] = $request->notes;
         }
-
-
 
         if ($purchase->update($validatedData)) {
             $purchaseId = $purchase->id;

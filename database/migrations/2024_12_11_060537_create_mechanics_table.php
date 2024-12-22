@@ -17,6 +17,7 @@ class CreateMechanicsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('type')->nullable();
+            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
             $table->softDeletes();

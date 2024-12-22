@@ -47,6 +47,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Type</th>
+                                        <th>Phone</th>
                                         <th>Address</th>
                                         <th>Action</th>
                                     </tr>
@@ -56,6 +57,7 @@
                                     <tr>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->type }}</td>
+                                        <td>{{ $item->phone }}</td>
                                         <td>{{ $item->address }}</td>
                                         <td>
                                             <a href="{{ route('mechanic.edit', [$item->id]) }}" class="btn btn-sm btn-warning my-2 mr-1">
@@ -78,6 +80,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Type</th>
+                                        <th>Phone</th>
                                         <th>Address</th>
                                         <th>Action</th>
                                     </tr>

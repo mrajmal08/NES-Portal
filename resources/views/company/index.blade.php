@@ -47,6 +47,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Phone</th>
+                                        <th>Vat No</th>
                                         <th>Address</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -57,6 +58,7 @@
                                     <tr>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->phone }}</td>
+                                        <td>{{ $item->vat_no }}</td>
                                         <td>{{ $item->address }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
@@ -77,6 +79,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Phone</th>
+                                        <th>Vat No</th>
                                         <th>Address</th>
                                         <th>Status</th>
                                         <th>Action</th>

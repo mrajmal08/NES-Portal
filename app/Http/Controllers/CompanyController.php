@@ -38,7 +38,7 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|unique:companies',
             'phone' => 'required',
-            'address' => 'required',
+            'vat_no' => 'required',
 
         ]);
 
@@ -56,6 +56,7 @@ class CompanyController extends Controller
         try {
             $data['name'] = $request->name;
             $data['phone'] = $request->phone;
+            $data['vat_no'] = $request->vat_no;
             $data['address'] = $request->address;
             $data['status'] = 'active';
 
@@ -92,7 +93,7 @@ class CompanyController extends Controller
                 Rule::unique('companies')->ignore($company->id),
             ],
             'phone' => 'required',
-            'address' => 'required',
+            'vat_no' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -112,6 +113,9 @@ class CompanyController extends Controller
         }
         if ($request->phone) {
             $validatedData['phone'] = $request->phone;
+        }
+        if ($request->vat_no) {
+            $validatedData['vat_no'] = $request->vat_no;
         }
         if ($request->address) {
             $validatedData['address'] = $request->address;

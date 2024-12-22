@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="vendor_id">Vendor</label> <span style="color: red;">*</span>
-                                        <select name="vendor_id" class="form-control">
+                                        <select name="vendor_id" class="form-control" required>
                                             <option disabled selected>--Select One--</option>
                                             @foreach ($vendor as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
-                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple>
+                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple required>
                                             <option disabled>--Select One--</option>
                                             @foreach ($product as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
@@ -76,26 +76,28 @@
 
                                 <div class="row mt-3">
                                     <div class="col-md col-sm">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="details-product-table-body"></tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="details-product-table-body"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row mt-3">
                                     <div class="col-md col-sm mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
-                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple>
+                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple required>
                                             <option disabled>--Select One--</option>
                                             @foreach ($service as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
@@ -108,19 +110,21 @@
 
                                 <div class="row mt-3">
                                     <div class="col-md col-sm">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="details-service-table-body"></tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="details-service-table-body"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -136,7 +140,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="invoice_photo">Invoice Photo</label>
-                                        <input type="file" class="form-control" name="invoice_photo" id="invoice_photo" accept="image/*" capture="environment" placeholder="Invoice Photo" capture>
+                                        <input type="file" class="form-control" name="invoice_photo[]" id="invoice_photo" multiple accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" capture="environment" placeholder="Invoice Photo" capture required>
                                     </div>
                                     <div class="col-md col-sm mb-2">
                                         <!-- <label for="invoice_photo">Invoice Photo</label>

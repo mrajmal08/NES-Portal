@@ -58,6 +58,8 @@ class OrderController extends Controller
             'mechanic_id' => 'required',
             'product' => 'required',
             'service' => 'required',
+            'vehicle_no' => 'required',
+            'vehicle_name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -74,28 +76,30 @@ class OrderController extends Controller
         try {
 
             $timestamp = Carbon::now()->timestamp;
-
-            if ($request->hasFile('car_picture')) {
-
-                $file = $request->file('car_picture');
-                $timestamp = now()->timestamp;
-                $extension = $file->getClientOriginalExtension();
-                $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
-
-                $file->move(public_path('images/car_pictures'), $filename);
-                $data['car_picture'] = $filename;
+            $documents = ['car_picture'];
+            foreach ($documents as $doc) {
+                if ($request->hasFile($doc)) {
+                    $filenames = [];
+                    foreach ($request->file($doc) as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $filename = rand(99999, 234567) . $timestamp . '.' . $extension;
+                        $file->move(public_path('images/car_pictures'), $filename);
+                        $filenames[] = $filename;
+                    }
+                    $data[$doc] = implode(',', $filenames);
+                }
             }
 
             $data['company_id'] = $request->company_id;
             $data['mechanic_id'] = $request->mechanic_id;
             // $data['date'] = $request->date;
+            $data['vehicle_name'] = $request->vehicle_name;
             $data['vehicle_no'] = $request->vehicle_no;
             $data['client_name'] = $request->client_name;
             $data['client_phone'] = $request->client_phone;
             $data['status'] = 'process';
             $data['total_price'] = $request->total_price;
             $data['notes'] = $request->notes;
-
             $order = Order::create($data);
 
             if ($order) {
@@ -200,6 +204,7 @@ class OrderController extends Controller
     public function view($id)
     {
         $order = Order::with(['products', 'services', 'mechanic', 'company'])->findOrFail($id);
+
         return view('order.view', compact('order'));
     }
 
@@ -213,6 +218,7 @@ class OrderController extends Controller
         try {
             $order = Order::findOrFail($request->id);
             $order->status = $request->status;
+            $order->delivery_date = now();
             $order->save();
 
             return response()->json(['message' => 'Order status updated successfully.']);
@@ -234,6 +240,8 @@ class OrderController extends Controller
             'mechanic_id' => 'required',
             'product' => 'required',
             'service' => 'required',
+            'vehicle_no' => 'required',
+            'vehicle_name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -248,16 +256,23 @@ class OrderController extends Controller
         }
 
         $timestamp = Carbon::now()->timestamp;
+        $documentFields = [
+            'car_picture'
+        ];
 
-        if ($request->hasFile('car_picture')) {
+        $validatedData = [];
+        foreach ($documentFields as $field) {
+            if ($request->hasFile($field)) {
+                $newFilesArray = [];
+                foreach ($request->file($field) as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = rand(99999, 234567) . $timestamp . '.' . $extension;
+                    $file->move(public_path('images/car_pictures'), $filename);
+                    $newFilesArray[] = $filename;
+                }
 
-            $file = $request->file('car_picture');
-            $timestamp = now()->timestamp;
-            $extension = $file->getClientOriginalExtension();
-            $filename = rand(99999, 234567) . '_' . $timestamp . '.' . $extension;
-
-            $file->move(public_path('images/car_pictures'), $filename);
-            $validatedData['car_picture'] = $filename;
+                $validatedData[$field] = implode(',', $newFilesArray);
+            }
         }
 
 
@@ -267,6 +282,9 @@ class OrderController extends Controller
         }
         if ($request->mechanic_id) {
             $validatedData['mechanic_id'] = $request->mechanic_id;
+        }
+        if ($request->vehicle_name) {
+            $validatedData['vehicle_name'] = $request->vehicle_name;
         }
         if ($request->vehicle_no) {
             $validatedData['vehicle_no'] = $request->vehicle_no;
