@@ -27,10 +27,19 @@ class HomeController extends Controller
     public function index()
     {
         $totalOrders = Order::count();
+        $orderCounts = Order::selectRaw("
+        COUNT(CASE WHEN status = 'process' THEN 1 END) as totalProcessedOrders,
+        COUNT(CASE WHEN status = 'delivered' THEN 1 END) as totalDeliveredOrders,
+        COUNT(CASE WHEN status = 'completed' THEN 1 END) as totalCompletedOrders
+    ")->first();
+        $totalProcessedOrders = $orderCounts->totalProcessedOrders;
+        $totalDeliveredOrders = $orderCounts->totalDeliveredOrders;
+        $totalCompletedOrders = $orderCounts->totalCompletedOrders;
+
         $totalUsers = User::count();
         $totalPurchase = VendorPurchase::count();
         $totalVendor = Vendor::count();
 
-        return view('home', compact('totalOrders', 'totalUsers', 'totalPurchase', 'totalVendor'));
+        return view('home', compact('totalOrders', 'totalUsers', 'totalPurchase', 'totalVendor', 'totalProcessedOrders', 'totalCompletedOrders', 'totalDeliveredOrders'));
     }
 }

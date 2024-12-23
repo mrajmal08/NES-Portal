@@ -73,7 +73,6 @@
                 </div>
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $totalVendor }}</h3>
@@ -86,13 +85,84 @@
                         <a href="{{ route('vendor.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{ $totalProcessedOrders }}</h3>
+                            <p>Total Processed Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-secondary">
+                        <div class="inner">
+                            <h3>{{ $totalCompletedOrders }}</h3>
+                            <p>Total Completed Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-default">
+                        <div class="inner">
+                            <h3>{{ $totalDeliveredOrders }}</h3>
+                            <p>Total Delivered Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
                 @elseif (auth()->user()->role_id == 2)
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>{{ $totalOrders }}</h3>
                             <p>Total Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{ $totalProcessedOrders }}</h3>
+                            <p>Total Processed Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-secondary">
+                        <div class="inner">
+                            <h3>{{ $totalCompletedOrders }}</h3>
+                            <p>Total Completed Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ route('order.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-default">
+                        <div class="inner">
+                            <h3>{{ $totalDeliveredOrders }}</h3>
+                            <p>Total Delivered Orders</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -106,7 +176,6 @@
                     <div class="small-box bg-danger">
                         <div class="inner">
                             <h3>{{ $totalPurchase }}</h3>
-
                             <p>Total Vendor Purchase</p>
                         </div>
                         <div class="icon">
