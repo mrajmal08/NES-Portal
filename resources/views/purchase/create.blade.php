@@ -129,10 +129,16 @@
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label style="color:green">Combined Total Price</label>
                                             <input type="text" class="form-control" id="combined-total-price" name="total_price" value="0.00" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label style="color:red">Discount In (%)</label>
+                                            <input type="number" class="form-control" id="discount" name="discount" />
                                         </div>
                                     </div>
                                 </div>

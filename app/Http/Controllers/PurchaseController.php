@@ -83,6 +83,7 @@ class PurchaseController extends Controller
             $data['vendor_id'] = $request->vendor_id;
             $data['total_price'] = $request->total_price;
             $data['notes'] = $request->notes;
+            $data['discount'] = $request->discount;
 
             $purchase = VendorPurchase::create($data);
 
@@ -121,11 +122,16 @@ class PurchaseController extends Controller
                     ]);
                 }
 
+                $total_price = is_numeric($request->total_price) ? $request->total_price : 0;
+                $discount = is_numeric($request->discount) ? $request->discount : 0;
+                $discount_amount = ($total_price * $discount) / 100;
+                $final_price = $total_price - $discount_amount;
+
                 $lastEntry = VendorHistory::where('vendor_id', $request->vendor_id)
                     ->orderBy('id', 'DESC')
                     ->first();
 
-                $remainingPayable = $request->total_price;
+                $remainingPayable = $final_price;
 
                 if ($lastEntry) {
                     $remainingPayable += $lastEntry->payable;
@@ -133,9 +139,10 @@ class PurchaseController extends Controller
 
                 VendorHistory::create([
                     'vendor_id' => $request->vendor_id,
-                    'purchase_price' => $request->total_price,
+                    'purchase_price' => $remainingPayable,
                     'payable' => $remainingPayable,
                     'status' => 'Added',
+                    'discount' => $request->discount,
                 ]);
             }
 
@@ -258,6 +265,9 @@ class PurchaseController extends Controller
         if ($request->total_price) {
             $validatedData['total_price'] = $request->total_price;
         }
+        if ($request->discount) {
+            $validatedData['discount'] = $request->discount;
+        }
         if ($request->notes) {
             $validatedData['notes'] = $request->notes;
         }
@@ -308,23 +318,28 @@ class PurchaseController extends Controller
                 ->orderByDesc('id')
                 ->first();
 
-            $remainingPayable = $lastEntry->payable ?? 0;
-            if ($request->total_price > $lastEntry->purchase_price) {
+                $total_price = is_numeric($request->total_price) ? $request->total_price : 0;
+                $discount = is_numeric($request->discount) ? $request->discount : 0;
+                $discount_amount = ($total_price * $discount) / 100;
+                $final_price = $total_price - $discount_amount;
 
-                $price = $request->total_price - $lastEntry->purchase_price;
-                $remainingPayable =  $remainingPayable + $price;
-            } elseif ($request->total_price < $lastEntry->purchase_price) {
+                $remainingPayable = $lastEntry->payable ?? 0;
+                if ($final_price > $lastEntry->purchase_price) {
 
-                $price =  $lastEntry->purchase_price - $request->total_price;
-                $remainingPayable = $remainingPayable - $price;
-            }
+                    $price = $final_price - $lastEntry->purchase_price;
+                    $remainingPayable =  $remainingPayable + $price;
+                } elseif ($final_price < $lastEntry->purchase_price) {
 
-            VendorHistory::create([
-                'vendor_id' => $request->vendor_id,
-                'purchase_price' => $request->total_price,
-                'payable' => $remainingPayable,
-                'status' => 'Updated',
-            ]);
+                    $price =  $lastEntry->purchase_price - $final_price;
+                    $remainingPayable = $remainingPayable - $price;
+                }
+
+                VendorHistory::create([
+                    'vendor_id' => $request->vendor_id,
+                    'purchase_price' => $final_price,
+                    'payable' => $remainingPayable,
+                    'status' => 'Updated',
+                ]);
         }
 
 

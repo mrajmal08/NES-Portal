@@ -21,6 +21,7 @@ class CreateVendorHistoryTable extends Migration
             $table->decimal('payable', 10, 2)->nullable();
             $table->dateTime('pay_date')->nullable();
             $table->string('status')->nullable();
+            $table->string('discount')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

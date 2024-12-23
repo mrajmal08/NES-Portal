@@ -56,6 +56,7 @@
                                         <th>Paid Price</th>
                                         <th>Payable</th>
                                         <th>Pay Date</th>
+                                        <th>Discount</th>
                                         <th>Status</th>
                                         <th>Created Date</th>
 
@@ -68,6 +69,7 @@
                                         <td>{{ $item->paid_price ?? 0 }}</td>
                                         <td>{{ $item->payable }}</td>
                                         <td>{{ $item->pay_date?? 'N/A' }}</td>
+                                        <td>{{ $item->discount }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>{{ $item->created_at }}</td>
                                     </tr>
@@ -80,6 +82,7 @@
                                         <th>Paid Price</th>
                                         <th>Payable</th>
                                         <th>Pay Date</th>
+                                        <th>Discount</th>
                                         <th>Status</th>
                                         <th>Created Date</th>
                                     </tr>
