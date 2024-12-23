@@ -56,7 +56,7 @@
                                         <th>Paid Price</th>
                                         <th>Payable</th>
                                         <th>Pay Date</th>
-                                        <th>Discount</th>
+                                        <th>Discount in %</th>
                                         <th>Status</th>
                                         <th>Created Date</th>
 
@@ -82,7 +82,7 @@
                                         <th>Paid Price</th>
                                         <th>Payable</th>
                                         <th>Pay Date</th>
-                                        <th>Discount</th>
+                                        <th>Discount in %</th>
                                         <th>Status</th>
                                         <th>Created Date</th>
                                     </tr>

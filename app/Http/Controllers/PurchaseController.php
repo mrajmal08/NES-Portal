@@ -130,7 +130,6 @@ class PurchaseController extends Controller
                 $lastEntry = VendorHistory::where('vendor_id', $request->vendor_id)
                     ->orderBy('id', 'DESC')
                     ->first();
-
                 $remainingPayable = $final_price;
 
                 if ($lastEntry) {
@@ -139,7 +138,7 @@ class PurchaseController extends Controller
 
                 VendorHistory::create([
                     'vendor_id' => $request->vendor_id,
-                    'purchase_price' => $remainingPayable,
+                    'purchase_price' => $final_price,
                     'payable' => $remainingPayable,
                     'status' => 'Added',
                     'discount' => $request->discount,
