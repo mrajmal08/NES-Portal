@@ -42,7 +42,11 @@
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
 
-                                <h2 class="fw-bold mb-2 text-uppercase">NES Login</h2>
+                                <div class="m-2">
+                                    <img src="{{ asset('dist/img/nec-logo.jpeg') }}" class="brand-image" style="width: 50%" />
+
+                                </div>
+                                <h2 class="fw-bold mb-2 text-uppercase">NEC Login</h2>
                                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
                                 <div data-mdb-input-init class="form-outline form-white mb-4">

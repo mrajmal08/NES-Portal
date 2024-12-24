@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md col-sm">
+                                    <div class="col-md col-sm table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -118,7 +118,7 @@
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md col-sm">
+                                    <div class="col-md col-sm table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
