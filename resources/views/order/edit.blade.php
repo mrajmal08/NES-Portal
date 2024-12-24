@@ -273,7 +273,7 @@
 
         function fetchAndPopulateData(orderId) {
             $.ajax({
-                url: '/get-edit-data',
+                url: '{{ route("get.edit.data") }}',
                 type: 'GET',
                 data: {
                     order_id: orderId

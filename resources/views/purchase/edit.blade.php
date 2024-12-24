@@ -246,7 +246,7 @@
 
         function fetchAndPopulateData(purchaseId) {
             $.ajax({
-                url: '/get-purchase-data',
+                url: '{{ route("get.purchase.data") }}',
                 type: 'GET',
                 data: {
                     purchase_id: purchaseId
