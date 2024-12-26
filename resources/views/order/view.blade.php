@@ -73,6 +73,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Product No</th>
                                             <th>Name</th>
                                             <th>Quantity #</th>
                                             <th>Remarks</th>
@@ -83,6 +84,7 @@
                                         @foreach ($order->products as $product)
                                         <tr>
                                             <td>{{ $product->id }}</td>
+                                            <td>{{ $product->product_no }}</td>
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->pivot->qty }}</td>
                                             <td>{{ $product->pivot->remarks }}</td>

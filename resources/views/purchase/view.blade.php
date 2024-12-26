@@ -48,6 +48,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Product No</th>
                                             <th>Name</th>
                                             <th>Quantity #</th>
                                             <th>Remarks</th>
@@ -57,6 +58,7 @@
                                     <tbody>
                                         @foreach ($purchase->products as $product)
                                         <tr>
+                                            <td>{{ $product->id }}</td>
                                             <td>{{ $product->product_no }}</td>
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->pivot->qty }}</td>

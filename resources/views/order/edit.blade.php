@@ -158,7 +158,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="name">Car Picture</label>
-                                        <input type="file" class="form-control" name="car_picture[]" multiple id="car_picture" accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" capture="environment" placeholder="Car Picture" capture>
+                                        <input type="file" class="form-control" name="car_picture[]" multiple id="car_picture" accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" placeholder="Car Picture">
                                     </div>
                                     <div class="col-md col-sm mb-2">
                                         <label for="vehicle_no">Vehicle Number</label>

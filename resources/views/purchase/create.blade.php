@@ -146,7 +146,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="invoice_photo">Invoice Photo</label>
-                                        <input type="file" class="form-control" name="invoice_photo[]" id="invoice_photo" multiple accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" capture="environment" placeholder="Invoice Photo" capture required>
+                                        <input type="file" class="form-control" name="invoice_photo[]" id="invoice_photo" multiple accept="application/pdf, image/png, image/jpeg, image/jpg, image/webp" placeholder="Invoice Photo" required>
                                     </div>
                                     <div class="col-md col-sm mb-2">
                                         <!-- <label for="invoice_photo">Invoice Photo</label>
