@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>NEC | National Experts Company</title>
+    <link rel="icon" type="image/png" href="{{ asset('dist/img/nec-logo.jpeg') }}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

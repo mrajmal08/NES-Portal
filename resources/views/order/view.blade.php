@@ -1,6 +1,24 @@
 @extends('layouts.app')
 
 @push('css')
+
+<style>
+    /* Print-specific styles */
+    @media print {
+        .print-right {
+            float: right;
+            text-align: right;
+            width: 100%;
+            position: relative;
+            top: -55px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+</style>
 @endpush
 
 @section('content')
@@ -129,33 +147,57 @@
                         </div>
 
                         <h3 class="mb-4">Order Images:</h3>
-                        <div class="row g-2 mb-4">
+                        <div class="row g-1 mb-4">
                             @foreach(explode(',', $order->car_picture) as $image)
-                            <div class="col-4">
+                            <div class="col-2">
                                 <div class="gallery-item gray">
                                     <a href="{{ asset('images/car_pictures/' . $image) }}?text=1"
                                         data-toggle="lightbox"
                                         data-title="{{ $order->date }}"
                                         data-gallery="gallery">
                                         <img src="{{ asset('images/car_pictures/' . $image) }}?text=1"
-                                            class="img-fluid" alt="{{ $order->date }}"
-                                            style="width:40px" />
+                                            class="img-fluid rounded"
+                                            alt="{{ $order->date }}"
+                                            style="width: 100px; height: 100px; object-fit: cover;" />
                                     </a>
                                 </div>
                             </div>
                             @endforeach
                         </div>
 
+
                         <div class="row">
+                            <!-- Mobile View: Total Price at the top -->
+                            <div class="col-12 d-sm-none mb-3">
+                                <p class="lead text-center"><b>Total Price:</b> <span>{{ $order->total_price }}</span></p>
+                            </div>
+
+                            <!-- Main Content -->
                             <div class="col-md-8 col-sm-12">
                                 <p class="lead"><b>Order By:</b> <span>{{ auth()->user()->name }}</span></p>
                                 <p class="lead"><b>Order Note:</b> <span>{{ $order->notes }}</span></p>
+
+                                <!-- Mobile View: Signature and Received By stacked -->
+                                <div class="d-sm-none">
+                                    <p class="lead mt-3"><b>Signature:</b> <span>________________________</span></p>
+                                    <p class="lead mt-3"><b>Received By:</b> <span>________________________</span></p>
+                                    <p class="lead mt-3"><b>Authorized By:</b> <span>________________________</span></p>
+                                </div>
                             </div>
+
+                            <!-- Right Side Content -->
                             <div class="col-md-4 col-sm-12">
-                                <p class="lead"><b>Total Price:</b> <span class="float-md-right">{{ $order->total_price }}</span></p>
-                                <p class="lead mt-3"><b>Signature:</b> <span class="float-md-right">________________________</span></p>
+                                <!-- Desktop & Print View -->
+                                <div class="d-none d-sm-block">
+                                    <p class="lead"><b>Total Price:</b> <span class="float-md-right">{{ $order->total_price }}</span></p>
+                                    <p class="lead mt-3"><b>Received By:</b> <span class="float-md-right">________________________</span></p>
+                                    <p class="lead mt-3 print-right"><b>Authorized By:</b> <span class="float-md-right">________________________</span></p>
+                                </div>
                             </div>
                         </div>
+
+
+
 
                         <div class="row no-print">
                             <div class="col-12">

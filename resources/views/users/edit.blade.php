@@ -65,6 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                @if (Auth::id() !== $user->id)
                                     <div class="col-md col-sm mb-2">
                                         <label for="role_id">Role</label>
                                         <select name="role_id" id="role_id" class="form-control">
@@ -76,6 +77,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @endif
                                     <div class="col-md col-sm mb-2">
                                     </div>
                                     <div class="col-md col-sm mb-2">

@@ -69,12 +69,15 @@
                                                 </i>
                                                 Edit
 
+                                                @if (Auth::id() !== $item->id)
                                                 <a href="javascript:void(0)"
-                                                    class="btn btn-sm btn-danger my-2 delete-record"
-                                                    data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash">
-                                                    </i>
-                                                    Delete </a>
+                                                class="btn btn-sm btn-danger my-2 delete-record"
+                                                data-id="{{ $item->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                    Delete
+                                                </a>
+                                            @endif
+
                                         </td>
                                     </tr>
                                     @endforeach

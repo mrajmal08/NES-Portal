@@ -24,7 +24,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::where('role_id', 2)->orderBy('id', 'DESC')->get();
+        $users = User::orderBy('id', 'DESC')->get();
 
         return view('users.index', compact('users'));
     }
