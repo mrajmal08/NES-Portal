@@ -93,6 +93,12 @@ class VendorController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
+        if (!$history) {
+            $flasher->option('position', 'top-center')
+                ->addWarning('No vendor history found. Please ensure the vendor exists and has a history.');
+            return Redirect::back()->with('message', 'No vendor history found. Please ensure the vendor exists and has a history.');
+        }
+
         if ($request->amount > $history->payable) {
             $flasher->option('position', 'top-center')
                 ->addWarning('The paid amount should be equal to or less than the payable amount.');

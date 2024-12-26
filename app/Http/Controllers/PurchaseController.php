@@ -47,8 +47,8 @@ class PurchaseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'required',
-            'product' => 'required',
-            'service' => 'required',
+            'product' => 'required_without:service',
+            'service' => 'required_without:product',
         ]);
 
         if ($validator->fails()) {
@@ -222,8 +222,8 @@ class PurchaseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'required',
-            'product' => 'required',
-            'service' => 'required',
+            'product' => 'required_without:service',
+            'service' => 'required_without:product',
         ]);
 
         if ($validator->fails()) {

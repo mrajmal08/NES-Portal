@@ -64,7 +64,7 @@
                                 <div class="row">
                                     <div class="col-md col-sm mb-2">
                                         <label for="product_id">Select Product</label><span style="color: red;">*</span>
-                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple required>
+                                        <select id="product_id" class="selectpicker form-control" data-live-search="true" multiple>
                                             <option disabled>--Select One--</option>
                                             @foreach ($product as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">
@@ -97,7 +97,7 @@
                                 <div class="row mt-3">
                                     <div class="col-md col-sm mb-2">
                                         <label for="service_id">Select Service</label><span style="color: red;">*</span>
-                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple required>
+                                        <select id="service_id" class="selectpicker form-control" data-live-search="true" multiple>
                                             <option disabled>--Select One--</option>
                                             @foreach ($service as $item)
                                             <option value="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}" data-remarks="{{ $item->remarks }}" data-checked="{{ $item->checked }}">

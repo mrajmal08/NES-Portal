@@ -56,8 +56,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'company_id' => 'required',
             'mechanic_id' => 'required',
-            'product' => 'required',
-            'service' => 'required',
+            'product' => 'required_without:service',
+            'service' => 'required_without:product',
             'vehicle_no' => 'required',
             'vehicle_name' => 'required',
         ]);
@@ -238,8 +238,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'company_id' => 'required',
             'mechanic_id' => 'required',
-            'product' => 'required',
-            'service' => 'required',
+            'product' => 'required_without:service',
+            'service' => 'required_without:product',
             'vehicle_no' => 'required',
             'vehicle_name' => 'required',
         ]);
