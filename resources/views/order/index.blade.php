@@ -27,33 +27,44 @@
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
 
-    <!-- Main content -->
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="row align-items-cente m-4">
-                            <div class="col-md-8 col-sm-12 mb-2">
+                        <div class="row m-4">
+                            <div class="col-md-4 col-sm-12 mb-2">
                                 <a href="{{ route('order.create') }}" class="btn btn-success">Add New Order</a>
                             </div>
-                            <div class="col-md-4 col-sm-12 ms-auto">
-                                <form method="GET" action="{{ route('order.index') }}" class="d-flex justify-content-end align-items-center">
-                                    <select class="form-control" name="status">
-                                        <option disabled selected>Filter By Status</option>
-                                        <option value="process">Process</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="delivered">Delivered</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary ml-2 mr-2">Filter</button>
-                                    <a href="{{ route('order.index') }}" class="btn btn-secondary">Cancel</a>
+                            <div class="col-md-8 col-sm-12 ms-auto float-md-end">
+                                <form method="GET" action="{{ route('order.index') }}" class="row g-2">
+                                    <div class="col-md-4 col-sm-12">
+                                        <select class="form-control" name="company">
+                                            <option disabled selected>Filter By Company</option>
+                                            @foreach ($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <select class="form-control" name="status">
+                                            <option disabled selected>Filter By Status</option>
+                                            <option value="process">Process</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="delivered">Delivered</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 d-flex justify-content-between">
+                                        <button type="submit" class="btn btn-primary w-100 me-2">Filter</button>
+                                        <a href="{{ route('order.index') }}" class="btn btn-secondary w-100">Cancel</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-
 
                         <!-- /.card-header -->
                         <div class="card-body">

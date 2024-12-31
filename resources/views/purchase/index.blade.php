@@ -35,11 +35,38 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card">
-                        <div class="card-header">
-                            <a href="{{ route('purchase.create') }}" class="btn btn-success">Add Purchase</a>
+                        <div class="row m-4">
+                            <div class="col-md-4 col-sm-12 mb-2">
+                                <a href="{{ route('purchase.create') }}" class="btn btn-success">Add Purchase</a>
+                            </div>
+                            <div class="col-md-8 col-sm-12 ms-auto float-md-end">
+                                <form method="GET" action="{{ route('purchase.index') }}" class="row g-2">
+                                    <div class="col-md-4 col-sm-12">
+                                        <!-- <select class="form-control" name="company">
+                                            <option disabled selected>Filter By Vendor</option>
+                                            @foreach ($vendors as $vendor)
+                                            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                            @endforeach
+                                        </select> -->
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <select class="form-control" name="vendor">
+                                            <option disabled selected>Filter By Vendor</option>
+                                            @foreach ($vendors as $vendor)
+                                            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 d-flex justify-content-between">
+                                        <button type="submit" class="btn btn-primary w-100 me-2">Filter</button>
+                                        <a href="{{ route('purchase.index') }}" class="btn btn-secondary w-100">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
+
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">

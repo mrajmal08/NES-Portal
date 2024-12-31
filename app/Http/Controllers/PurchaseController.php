@@ -27,11 +27,19 @@ class PurchaseController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->orderBy('id', 'Desc')->get();
+        $purchase = VendorPurchase::with(['vendor', 'products', 'services'])->orderBy('id', 'Desc');
+        $vendors = Vendor::orderBy('id', 'DESC')->get();
 
-        return view('purchase.index', compact('purchase'));
+        if ($request->has('vendor') && $request->vendor !== '') {
+            $purchase = $purchase->whereHas('vendor', function ($query) use ($request) {
+                $query->where('id', $request->vendor);
+            });
+        }
+
+        $purchase = $purchase->get();
+        return view('purchase.index', compact('purchase', 'vendors'));
     }
     public function create()
     {
